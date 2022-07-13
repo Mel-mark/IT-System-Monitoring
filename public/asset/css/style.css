@@ -1,0 +1,290 @@
+body{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 13%, rgb(27, 36, 48) 46%,rgb(27, 36, 48) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 950px;
+    margin-top: 1%;
+}
+.container-fluid{
+    width: 80%;
+}
+
+.chart{
+    float:left;
+    width: 100%; 
+    margin: auto;
+    background-color:white;
+    padding:5px;
+}
+.number {
+    color:red;
+    font-size: 15px;
+    
+} 
+.i{
+    color:red;
+}
+
+.week-container{
+    float: left;
+}
+h1{
+    float:left;
+}
+h2{
+    font-size: 60px;
+    font-family: fantasy;
+}
+.card-h1{
+    font-size: 30px;
+    margin-left: 20px;
+}
+.logout{
+    float:right;
+}
+.logout-logo{
+    width:25px;
+}
+.download{
+    width:30px;
+
+}
+.card-header{
+    float:left;
+}
+
+ul.b {
+   list-style-type: none;
+  }
+.image-li{
+    width: 20px;
+}
+td{
+    padding:5px;
+    padding-right:50px;
+}
+/* icons image */
+.view-list{
+    width: 30px;
+    float:right;
+}
+.image-chart{
+    width: 30px;
+}
+.table-status{
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.card-th{
+    font-size: 30px;
+    font-weight: 500;
+}
+.arrow-down{
+    border: none; 
+    outline: none; 
+    background-color:transparent; 
+    padding:15px;
+}
+.logos{
+    margin-top: -15px;
+    width: 40px;
+}
+.melmarkpogi{
+    font-size: 30px;
+    font-family: fantasy ;
+    text-shadow: 1px 1px rgb(31, 70, 144);
+}
+.add{
+    float: right;
+    font-size: 30px;
+    font-family: fantasy ;
+    margin-top: 10px;
+}
+.hidethis{
+    opacity: 0;
+}
+/* containers ====================================== */
+.container-edit{
+    border:1px solid black;
+    background-color:white;
+    border-radius: 15px;
+    padding:20px;
+    position: relative;
+}
+.chart-container{
+    background-color: #DBDFFD;
+    float: left;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+
+.history-button {
+    position: relative;
+    background-color: white;
+    border: none;
+    color: black;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid black ;
+  }
+  
+  .history-button:after {
+    content: "";
+    background: black;
+    display: block;
+    position: absolute;
+    border-radius: 9px;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+  }
+  
+  .history-button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+/* History ---------------------------------00000000000000000000--------------------------------000000000000000000000000000-------------------------------------*/
+
+/* hover ---------------------------------------------------------------------- */
+.hover {
+    margin-top: -50px;
+    --s: 0.1em;   /* the thickness of the line */
+    --c: rgb(24, 36, 51) ; /* the color */
+    
+    color: #0000;
+    padding-bottom: var(--s);
+    background: 
+      linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+      linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+    -webkit-background-clip: text,padding-box;
+            background-clip: text,padding-box;
+    transition: 0.2s;
+  }
+  .hover:hover {
+    --_p: 100%
+  }
+  /* hover cards ------------------------------------------------------------ */
+/* overview */
+  .hovertext {
+    float: right;
+    width: 46%;
+    margin-top: 40px;
+    border-radius: 10px;
+    background-color:rgb(156, 180, 204);
+    position: relative;
+    border-bottom: 1px dotted black;
+  }
+  
+  .hovertext:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px ;
+    transition: opacity 1s ease-in-out;
+  
+    position: absolute;
+    z-index: 1;
+    left: -200px;
+    top: 0;
+  }
+  
+  .hovertext:hover:before {
+    opacity: 0.9;
+    visibility: visible;
+  }
+/* status */
+  .hovertext-status{
+        float: left;
+        width: 50%;
+        background-color:white;
+        margin-top: 40px;
+        border-radius: 10px;
+        position: relative;
+        border-bottom: 1px dotted black;
+ }
+   
+ .hovertext-status:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px ;
+    transition: opacity 1s ease-in-out;
+  
+    position: absolute;
+    z-index: 1;
+    left: 100%;
+    top: 0;
+  }
+  
+  .hovertext-status:hover:before {
+    opacity: 0.9;
+    visibility: visible;
+  }
+  /* history */
+
+    .filtration{
+        float: right;
+        padding:2px;
+        margin-top:10px;
+    }
+    .search{
+        width: 40px;
+        margin-top: -10px;
+
+    }
+
+    .hovertext-history{
+        border-radius: 10px;
+        padding:10px;
+        float: left;
+        margin-top: 50px;
+        background-color: white;
+        margin-bottom: 20px;
+
+        position: relative;
+        border-bottom: 1px dotted black;
+  }
+  
+ .hovertext-history:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 270px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px ;
+    transition: opacity 1s ease-in-out;
+  
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: -50px;
+  }
+  
+  .hovertext-history:hover:before {
+    opacity: 1;
+    visibility: visible;
+  }
