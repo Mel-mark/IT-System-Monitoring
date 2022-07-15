@@ -286,6 +286,9 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
 
 
+  <!-- data table -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  
 </head>
 <body >
     <div class="mybody">    
@@ -317,11 +320,11 @@
         
             
             <!-- overview ===================================================================================================================================== -->
-                    <div class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">
+                    <div  class="overview-container">
                         <div class="card" > 
                     
                         <div class="card-header"> 
-                            <h1>Tickets Overview</h1>
+                            <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
                     
                         </div>
 
@@ -366,14 +369,15 @@
                     </div>
 
             <!-- status======================================================================================================= -->
-                <div class="hovertext-status" data-hover="The is the Status Card where all system is listed and being sorted, it indicates the highest priority level of the system, here you can add and see the reports/ticked of employee.">
+                <div class="hovertext-status" >
                     <div class="card" >
                         <div class="card-header"> 
-                            <h1>Status</h1>
+                            <h1 class="myh1hover" data-hover="The is the Status Card where all system is listed and being sorted, it indicates the highest priority level of the system, here you can add and see the reports/ticked of employee.">Status</h1>
                             <div class="add">
                                 <a data-toggle="modal" data-target="#addmodal"><span class="hover">Add</span>
                                     <img src="{{ asset('asset/image/add.png') }}" class="logos"> 
                                 </a>
+                                
                             </div>
                         </div>
 
@@ -404,21 +408,29 @@
                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                 @else
                                                                     @if($pri1 == 'Outage')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                </span>{{$pri1 ;}} ({{$i1}})
-                                                                            </a>
+                                                                            <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                    </span >{{$pri1 ;}} ({{$i1}})
+                                                                                </a>
+                                                                            </h4>
                                                                         @elseif($pri1 == 'Major Impact')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
-                                                                                </span>{{$pri1 ;}} ({{$i1}})
-                                                                            </a>
+                                                                            <h4  class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
+                                                                                    </span>{{$pri1 ;}} ({{$i1}})
+                                                                                </a>
+                                                                            </h4>
                                                                         @elseif($pri1 == 'Minor Impact')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
-                                                                                </span>{{$pri1 ;}} ({{$i1}})
-                                                                            </a>
+                                                                             <h4  class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
+                                                                                        </span >{{$pri1 ;}} ({{$i1}})
+                                                                                    </a>
+                                                                            </h4>
                                                                         @elseif($pri1 == 'Low Impact or Request')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                </span>{{$pri1 ;}} ({{$i1}})
-                                                                            </a>
+                                                                             <h4  class="status-hover"  data-hover=" A general request">
+                                                                                <a href="#" class="Low" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                    </span class=""  data-hover="dddddddddddd">{{$pri1 ;}} ({{$i1}})
+                                                                                </a>
+                                                                            </h4>
                                                                         @else
                                                                             </span>{{$pri1 ;}} ({{$i1}})
                                                                         @endif
@@ -430,21 +442,29 @@
                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                 @else
                                                                 @if($pri2 == 'Outage')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                    </span>{{$pri2 ;}} ({{$i2}})
-                                                                                </a>
+                                                                            <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                        </span>{{$pri2 ;}} ({{$i2}})
+                                                                                    </a>
+                                                                             </h4>
                                                                         @elseif($pri2 == 'Major Impact')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
-                                                                                    </span>{{$pri2 ;}} ({{$i2}})
-                                                                                </a>
+                                                                             <h4  class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
+                                                                                        </span>{{$pri2 ;}} ({{$i2}})
+                                                                                    </a>
+                                                                             </h4>
                                                                         @elseif($pri2 == 'Minor Impact')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
-                                                                                    </span>{{$pri2 ;}} ({{$i2}})
-                                                                                </a>
+                                                                             <h4 class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
+                                                                                        </span>{{$pri2 ;}} ({{$i2}})
+                                                                                    </a>
+                                                                            </h4>
                                                                         @elseif($pri2 == 'Low Impact or Request')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                    </span>{{$pri2 ;}} ({{$i2}})
-                                                                                </a>
+                                                                            <h4  class="status-hover"  data-hover=" A general request">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                        </span>{{$pri2 ;}} ({{$i2}})
+                                                                                    </a>
+                                                                             </h4>
                                                                         @else
                                                                                 <span class="badge  bg-success text-success">0</span> Operational
                                                                                 </span>{{$pri2 ;}} ({{$i2}})
@@ -457,21 +477,29 @@
                                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                     @else
                                                                             @if($pri3 == 'Outage')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                    </span>{{$pri3 ;}} ({{$i3}})
-                                                                                </a>
+                                                                                <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                        </span>{{$pri3 ;}} ({{$i3}})
+                                                                                    </a>
+                                                                                 </h4>
                                                                             @elseif($pri3 == 'Major Impact')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
-                                                                                    </span>{{$pri3 ;}} ({{$i3}})
-                                                                                </a>
+                                                                                <h4  class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
+                                                                                        </span>{{$pri3 ;}} ({{$i3}})
+                                                                                    </a>
+                                                                                 </h4>
                                                                             @elseif($pri3 == 'Minor Impact')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
-                                                                                    </span>{{$pri3 ;}} ({{$i3}})
-                                                                                </a>
+                                                                                <h4 class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
+                                                                                        </span>{{$pri3 ;}} ({{$i3}})
+                                                                                    </a>
+                                                                                </h4>
                                                                             @elseif($pri3 == 'Low Impact or Request')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                    </span>{{$pri3 ;}} ({{$i3}})
-                                                                                </a>
+                                                                                <h4  class="status-hover"  data-hover=" A general request">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                        </span>{{$pri3 ;}} ({{$i3}})
+                                                                                    </a>
+                                                                                 </h4>
                                                                             @else
                                                                                 <span class="badge  bg-success text-success">0</span> Operational
 
@@ -484,21 +512,30 @@
                                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational   
                                                                     @else                                           
                                                                         @if($pri4 == 'Outage')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                </span>{{$pri4 ;}} ({{$i4}})
-                                                                            </a>
+                                                                            <h4 class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                    </span>{{$pri4 ;}} ({{$i4}})
+                                                                                </a>
+                                                                             </h4>
                                                                         @elseif($pri4 == 'Major Impact')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
-                                                                                </span>{{$pri4 ;}} ({{$i4}})
-                                                                            </a>
+                                                                            <h4  class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
+                                                                                    </span>{{$pri4 ;}} ({{$i4}})
+                                                                                </a>
+                                                                             </h4>
                                                                         @elseif($pri4 == 'Minor Impact')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;"   >0                                                               </span>{{$pri4 ;}} ({{$i4}})
-                                                                                </span>{{$pri4 ;}} ({{$i4}})
-                                                                            </a>
+                                                                            <h4  class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2">
+                                                                                        <span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;" >0                                                       
+                                                                                    </span>{{$pri4 ;}} ({{$i4}})
+                                                                                </a>
+                                                                            </h4>
                                                                         @elseif($pri4 == 'Low Impact or Request')
-                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;" >0                                                                 </span>{{$pri4 ;}} ({{$i4}})
-                                                                                </span>{{$pri4 ;}} ({{$i4}})        
-                                                                            </a>
+                                                                            <h4  class="status-hover"  data-hover=" A general request">
+                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;" >0   
+                                                                                    </span>{{$pri4 ;}} ({{$i4}})        
+                                                                                </a>
+                                                                             </h4>
                                                                         @else
                                                                             <span class="badge  bg-success text-success">0</span> Operational
                                                                         
@@ -510,21 +547,29 @@
                                                                                 <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                     @else
                                                                         @if($pri5 == 'Outage')
-                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                        </span>{{$pri5 ;}} ({{$i5}})
-                                                                                    </a>
+                                                                                    <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                                    </span>{{$pri5 ;}} ({{$i5}})
+                                                                                                </a>
+                                                                                     </h4>
                                                                                 @elseif($pri5 == 'Major Impact')
-                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
-                                                                                        </span>{{$pri5 ;}} ({{$i5}})
-                                                                                    </a>
+                                                                                    <h4 class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
+                                                                                        <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
+                                                                                            </span>{{$pri5 ;}} ({{$i5}})
+                                                                                        </a>
+                                                                                     </h4>
                                                                                 @elseif($pri5 == 'Minor Impact')
-                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
-                                                                                        </span>{{$pri5 ;}} ({{$i5}})
-                                                                                    </a>
+                                                                                    <h4  class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
+                                                                                        <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
+                                                                                            </span>{{$pri5 ;}} ({{$i5}})
+                                                                                        </a>
+                                                                                    </h4>
                                                                                 @elseif($pri5 == 'Low Impact or Request')
-                                                                                        <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                        </span>{{$pri5 ;}} ({{$i5}})
-                                                                                    </a>
+                                                                                    <h4  class="status-hover"  data-hover=" A general request">
+                                                                                            <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                                </span>{{$pri5 ;}} ({{$i5}})
+                                                                                            </a>
+                                                                                     </h4>
                                                                                 @else
                                                                                     <span class="badge  bg-success text-success">0</span> Operational
                                                                                 @endif
@@ -534,21 +579,29 @@
                                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                     @else
                                                                             @if($pri6 == 'Outage')
+                                                                            <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
                                                                                     </span>{{$pri6 ;}} ({{$i6}})
                                                                                 </a>
+                                                                                 </h4>
                                                                             @elseif($pri6 == 'Major Impact')
+                                                                             <h4   class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
                                                                             <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
                                                                                         </span>{{$pri6 ;}} ({{$i6}})
                                                                                     </a>
+                                                                                     </h4>
                                                                             @elseif($pri6 == 'Minor Impact')
+                                                                             <h4   class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
                                                                                     </span>{{$pri6 ;}} ({{$i6}})
                                                                                 </a>
+                                                                                </h4>
                                                                             @elseif($pri6 == 'Low Impact or Request')
+                                                                            <h4  class="status-hover"  data-hover=" A general request">
                                                                                     <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
                                                                                         </span>{{$pri6 ;}} ({{$i6}})
                                                                                     </a>
+                                                                                     </h4>
                                                                             @else
                                                                                         
                                                                             @endif
@@ -559,21 +612,29 @@
                                                                     <span class="badge  bg-success text-success" style="font-size:15px;">0</span> Operational
                                                                     @else
                                                                     @if($pri7 == 'Outage')
-                                                                                <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                </span>{{$pri7 ;}} ({{$i7}})
-                                                                                </a>
+                                                                                <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
+                                                                                        </span>{{$pri7 ;}} ({{$i7}})
+                                                                                    </a>
+                                                                                 </h4>
                                                                             @elseif($pri7 == 'Major Impact' )
+                                                                             <h4 class="status-hover"  data-hover=" A serious issue impacting some of your TSM users">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-danger  text-danger" style="font-size:15px;">0
                                                                                     </span>{{$pri7 ;}} ({{$i7}})
                                                                                 </a>
+                                                                                 </h4>
                                                                             @elseif($pri7 == 'Minor Impact')
+                                                                             <h4  class="status-hover"  data-hover="An issue that is not stoping the majority of your users from using TSM">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0
                                                                                     </span>{{$pri7 ;}} ({{$i7}})
                                                                                 </a>
+                                                                                </h4>
                                                                             @elseif($pri7 == 'Low Impact or Request')
+                                                                            <h4   class="status-hover"  data-hover=" A general request">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
                                                                                     </span>{{$pri7 ;}} ({{$i7}})
                                                                                 </a>
+                                                                                 </h4>
                                                                             @else
                                                                         
                                                                             @endif
@@ -625,41 +686,41 @@
                     <table class="hidethis">
                         <tr>
                             <td><b>ORIGIN</b></td>
-                            <td><span class="badge  bg-success text-success" style="font-size:15px;">0</span>  </td>
-                            <td><span class="badge  bg-dark text-dark" style="font-size:15px;">0</span>  </td>
-                            <td><span class="badge  bg-danger  text-danger" style="font-size:15px;">0</span> </td>
+                            <td><span class="badge  bg-success text-success" style="font-size:5px;">0</span>  </td>
+                            <td><span class="badge  bg-dark text-dark" style="font-size:5px;">0</span>  </td>
+                            <td><span class="badge  bg-danger  text-danger" style="font-size:5px;">0</span> </td>
                         </tr>
                             <td></td>
                             <td></td>
-                            <td><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:15px;">0</span> </td>
-                            <td><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0</span> </td>
+                            <td><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:5px;">0</span> </td>
+                            <td><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:5px;">0</span> </td>
                         <tr>
                         </tr>
                     </table>
                 </div>
             <!-- end of loop  status-===========================================================================================-->
-            <!-- id="download" -->
+          
             <!-- History ======================================================================================================================= -->
-                <div  class="hovertext-history" data-hover="History of done tickets">
-                    <h1>History 
-        
-                        <!-- <button id="download"> <img src="{{ asset('asset/image/download.png') }}" class="download"> </button>
-                        <button class = "dl">   </button> -->
+            <div  class="hovertext-history" >
+                    <h1 class="history-card" data-hover="History of done tickets">
+                        History 
                     </h1>
+                        <div style="float:left;" >
+                                <button class = "download" data-hover="Download Filtered Data">  
+                                </button>
+                        </div>
                     
-                    <div class="filtration">
-            
-                            @csrf
-                    
+                     <br>
+                     <div class="filtration">
                             From:
-                            <input name="from"  class="from" id="datepicker-from" placeholder="Enter Date" autocomplete="off">
+                            <input name="from"  type="date" class="from" id="from_date" placeholder="Enter Date" autocomplete="off">
 
                             To:
-                            <input name="to" class="to"  id="datepicker-to" placeholder="Enter Date" autocomplete="off">
+                            <input name="to" type="date" class="to"  id="to_date" placeholder="Enter Date" autocomplete="off">
 
                             System:
-                            <select class="status" name="system" id="systems">
-                                <option value="All">All</option>
+                            <select class="systems" name="systems" id="sy">
+                                <option value="All"></option>
                                 <option value="Citrix"> Citrix</option>
                                 <option value="Data Center Server">Data Center Server</option>
                                 <option value="eClipse">eClipse</option>
@@ -668,100 +729,54 @@
                                 <option value="TSM Mobile">TSM Mobile</option>
                                 <option value="TSM Office"> TSM Office</option>
                             </select>
-                            Status:
 
-                            <select class="status" name="status" id="status">
-                                <option value="All">All</option>
+                            Status:
+                            <select class="status" name="status" id="st">
+                                <option value="All"></option>
                                 <option value="Cancel">Cancel</option>
                                 <option value="Complete">Complete</option>
                             </select>
 
                             Personel:
-                            <select class="personel" name="personel" id="personel">
-                                <option value="All">All</option>
+                            <select class="personel" name="personel" id="pe">
+                                <option value="All"></option>
                                 <option value="Chris">Chris</option>
                                 <option value="Jo Anne">Jo Anne</option>
                                 <option value="Paul">Paul</option>
                                 <option value="Valter">Valter</option>
                             </select>
-
-                            <button id="search" class="history-button" >Search</button>
-                            <a href="{{ url('/admin')}} "> <button class="history-button" > Reset</button> </a>
-
-                            <img src="{{ asset('asset/image/search.png') }}" class="search"> 
-                
+                            <button onclick="reload_table()" class="filterbutton">Filter</button>   
                     </div>
-                
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Name</th>
-                            <th>System</th>
-                            <th>Personel</th>
-                            <th>Level</th>
-                            <th>Comment</th>
-                            <th>Description</th>
-                            <th>Job Status</th>
-                            <th>Date report</th>
-                            <th>Last update</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table">
-                        @php 
-                            {{$i = 0;}}
-                        @endphp
-                        @foreach($History_reports as $report)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{$report->s_description }} </td>
-                                <td>{{$report->name }} </td>
-                                <td>{{$report->system }} </td>
-                                <td>{{$report->ass_personel }} </td>
-                                <td>{{$report->pri_level }} </td>
-                                <td>{{$report->comment }} </td>
-                                <td>{{$report->l_description }} </td>
-                                <td>
-                                    @if($report->status == 'Cancel')
-                                    <a href="#"  id="modal1" onclick="showCancel({{$report->id}})" data-toggle="modal" data-target="#myModal"> <p style="color:red;">Canceled</p> </a>
-                                    @else
-                                    <p style="color:green;">Complete</p>
-                                    @endif
-                                </td>
-                                <td>{{$report->created_at }} </td>
-                                <td>{{$report->updated_at }} </td>
-                            </tr>
-                            
-                        @endforeach
+                    <br>
+                    <br>
+                    <hr >
+                <table class="table table-striped" id="datatable">
+             
+                    <tbody id="history-body">
+                       
                     </tbody>
-                </table>
-                <div style="float:right;">
-                    {!! $History_reports->links() !!}
-                </div>
-                </div>
-    </div>
-
-                                <!-- modal Cancel resason-->    
-                                <div class="modal fade"  id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" >
-                                            <div class="modal-content" >
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="myModalLabel">Reason of Report Cancelation</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    
-                                                        <textarea name="reason" id="reason" cols="100" rows="10" readonly></textarea>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <!-- end of cancel-->     
+            
+            </table>
+        </div>
+            <!-- modal Cancel resason-->    
+                <div class="modal fade"  id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" >
+                            <div class="modal-content" >
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Reason of Report Cancelation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                        <textarea name="reason" id="reason" cols="100" rows="10" readonly></textarea>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <!-- end of cancel-->     
                 
             <!-- End history -------------------------------------------------------------------------------------------------------------- -->
             <!-- modal Cancel resason ==========================================================================================-->    
@@ -792,13 +807,12 @@
 
             <!-- Modal add-->
                 <div class="modal fade" id="addmodal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content" style="padding:10px;">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="myModalLabel">Add Reports</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
+                                    <a data-toggle="modal" data-target="#filemodal"><span class="csv">Upload CSV Files +</span></a>
+                                    
                             </div>
                             <div class="modal-body" >
                                 <form  action="{{ route('addReport') }}"method="POST">
@@ -889,33 +903,77 @@
                     </div>
                 </div>
             <!-- end modal -->
-
+             
             
-            </div>
+            </div>							
         </div>
+
     </div>
+    <!-- file upload modal -->
+       <div class="modal fade"  id="filemodal"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" >
+                                    <div class="modal-content" >
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModal2Label">Upload CSV File</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url('/addCSV')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <h5>Tips: <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1. File extension should be CSV. <br><br>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2. Follow the following format of CSV file: <br>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;a. 1st column should be the header.<br>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;b. second and below column will be the data.<br> <br>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. Row data should be align as follow:<br><br>
+                                                                <img src="{{ asset('asset/image/sampleData.png') }}" style="width:100%;"> 
+                                                            <br><br>
+                                                                                             
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. once you submited the data you will not be able to delete or undo it.<br><br>
+                                                </h5>
+                                                <div class="input-group">
+                                                    <input type="file" name="file" id="file" class="form-control" required>
+                                                </div>
+                                            
+                                        </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Upload</button>
+                                            </div>
+                                            </form>
+                                    </div>
+                                </div>
+                </div>
+    <!-- end modal -->
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js" charset="utf-8"></script>
 
-<!-- date picker -->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- date picker -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
 
-
-<script>
     
-// get data from eloquent
- const _reports = {!! json_encode($data) !!};
-
+<script>
 // creating new table inside js because modal has its own table that make it difficult to arrange, cannot build a table inside a table T_T
 // global variable
+    var  from = $('.from').val();
+    var  to = $('.to').val();
+    var  status = $('.status').val();
+    var  systems = $('.systems').val();
+    var  personel =  $(".personel").val();
+    console.log(from,to,status,systems,personel);
+
     var table = '';
     var close_option =   ' </tr>' ;
     var table_foot = ' </tbody>' +
@@ -938,6 +996,115 @@
                             '<tbody>' ; 
         var option = '';
         var item = 0;
+// data table
+    $(function() {
+            var drawer_count = 1;
+            var data = [];
+            $('#datatable').DataTable({
+
+                 
+
+                "oLanguage": {
+                    "sProcessing": '<span>Please wait ...</span>'
+                },
+                "pagingType": "simple_numbers",
+                "paging": true,
+                "lengthMenu": [
+                    [10, 25, 50],
+                    [10, 25, 50]
+                ],
+                "processing": true,
+                "serverSide": true,
+                "ordering": false,
+                "ajax": {
+                    "type": "GET",
+                    "url": "{{ url('getHistoryDdata') }}",
+                    "data": function(result) {
+                        result.from_date = document.getElementById('from_date').value;
+                        result.to_date = document.getElementById('to_date').value;
+                        result.Personel = document.getElementById('pe').value;
+                        result.System  = document.getElementById('sy').value;
+                        result.Status = document.getElementById('st').value;
+                      
+
+                    },
+                    "dataFilter": function(data) {
+                        drawer_count++;
+                        var json = jQuery.parseJSON(data);
+                        json.draw = json.draw;
+                        json.recordsTotal = json.total;
+                        json.recordsFiltered = json.total;
+                        json.data = json.data;
+
+
+                        $('#list_table_processing').css('display', 'none');
+                        return JSON.stringify(json); // return JSON string
+                    }
+                    },
+                    "columns": [
+                      
+                        { "title": '#',             "data": "#",                "name": "#",            "visible": true, "searchable": true },
+                        { "title": 'Title',         "data": "Title",            "name": "Title",        "visible": true, "searchable": true },
+                        { "title": 'Description',   "data": "Description",      "name": "Description",  "visible": true, "searchable": true},
+                        { "title": 'Name' ,         "data": "Name",             "name": "Name",         "visible": true, "searchable": true},
+                        { "title": 'Comment' ,      "data": "Comment",          "name": "Comment",      "visible": true, "searchable": true},
+                        { "title": 'System' ,       "data": "System",           "name": "System",       "visible": true, "searchable": true},
+                        { "title": 'Level',         "data": "Pri_level",        "name": "Pri_level",    "visible": true, "searchable": true },
+                        { 
+                            "title": 'Status',      "name": "Status",           "visible": true, "searchable": true, 
+
+                            "mRender": function(data, type, full) {
+                                if(full.Status == 'Cancel'){
+                                    return  '<a href="#"  id="modal1" onclick="showCancel(' + full.id + ')" data-toggle="modal" data-target="#myModal"> <p style="color:red;">Canceled</p> </a>';
+                                }else{
+                                   return  '<p style="color:green;">Completed</p>';
+                                }
+                            }
+                        },
+                        { "title": 'Personel',      "data": "Personel",         "name": "Personel",     "visible": true, "searchable": true },
+                        { "title": 'Submitted',     "data": "Submitted",        "name": "Submitted",    "visible": true, "searchable": true },
+                        { "title": 'Completed',     "data": "Completed",        "name": "Completed",    "visible": true, "searchable": true},
+                        { "title": 'created_at',    "data": "created_at",       "name": "created_at",   "visible": false, "searchable": true },
+                        
+                    ],
+
+
+            });
+
+
+
+            // $('#history-body').html()
+        });
+
+        function reload_table() {
+            //  download filtered data
+                        from = $('.from').val();
+                        to = $('.to').val();
+                        status = $('.status').val();
+                        systems = $('.systems').val();
+                        personel =  $(".personel").val();
+                        var href = '';
+                        console.log(from,to,status,systems,personel);
+
+                        if(status == 'All'||  systems == 'All'||  personel == 'All' || from == '' && to == ''){
+                                href = '<a href="{{url("export")}}/' + null + '/' + null +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                                        '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                                                    '</a>';
+                        }else{
+                            href = '<a href="{{url("export")}}/' + from + '/' + to +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                                        '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                                                    '</a>';
+                        }
+                    
+                        $('.download').html(href);
+                // end of download
+            $('#datatable').DataTable().ajax.reload();
+        }
+  
+// get data from eloquent
+ const _reports = {!! json_encode($data) !!};
+
+
 // getting report id for cancel modal
         function mods(id){
 
@@ -1185,7 +1352,7 @@
 // history filtration and modal ===============================================000000000000000000000000000000000000000000000000===================================
 // cancel modal
     function showCancel(id) {
-
+    console.log(id);
     const canceled = {!! json_encode($cancel) !!};
 
     canceled.forEach((cancel) => {
@@ -1198,115 +1365,11 @@
     });
     };
 
-// ajax filter
-
-
-    $('#search').on('click', function(){
-      
-      let data = {
-                  from:$('#datepicker-from').val(),
-                  to:$('#datepicker-to').val(),
-                  status:$('#status').val(),
-                  systems:$('#systems').val(),
-                  personel:$('#personel').val()
-      };
-
-      var historystatus = '';
-      var tablehistory_tr = '';
-      $.ajax({
-                  headers: {
-                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  type: "POST",
-                  url: "/filter",
-                  data:  data
-              }).done(function(result,request,textStatus) {
-
-                      var result = result.data;
-                      for(var i=0;i < result.length;i++ )
-                      {
-                        item = item + 1;
-                            if(result[i].status == 'Cancel'){
-                                historystatus = '<a href="#"  id="modal1" onclick="showCancel('+ result[i].id + ')" data-toggle="modal" data-target="#myModal"> <p style="color:red;">Canceled</p> </a>' ;
-                            }
-                            else{
-                                historystatus = ' <p style="color:green;">Complete</p>' ;
-                            }
-
-                            tablehistory_tr += '<tr>'+
-                                                    '<td>' +  item  +'</td>' + 
-                                                    '<td>' + result[i].s_description  +'</td>' + 
-                                                   ' <td>' + result[i].name  +'</td>' + 
-                                                   ' <td>' + result[i].system  +'</td>' + 
-                                                   ' <td>' + result[i].ass_personel + '</td>' + 
-                                                   ' <td>' + result[i].pri_level  +'</td>' + 
-                                                   ' <td>' + result[i].comment + '</td>' + 
-                                                    '<td>' + result[i].l_description  +'</td>' + 
-                                                   ' <td>' + 
-                                                        historystatus +
-                                                    '</td>' +
-                                                    ' <td>'+ result[i].created_at.slice(0,10) +  ' ' + result[i].created_at.slice(11,19) + '</td>' +
-                                                     '<td>'+ result[i].updated_at.slice(0,10) + ' ' + result[i].updated_at.slice(11,19) +  '</td>' +
-                                              '</tr>';
-                           
-                            
-                          }
-                     $("#history-table").html(tablehistory_tr);
-         });
-                     
-  });
-
-
-// date picker
-    $(function() {
-
-        // date from
-        $('#datepicker-from').datepicker({
-        dateFormat: 'yy-mm-dd',
-        onSelect: function(datetext) {
-            var d = new Date(); // for now
-
-            var h = d.getHours();
-            h = (h < 10) ? ("0" + h) : h ;
-
-            var m = d.getMinutes();
-            m = (m < 10) ? ("0" + m) : m ;
-
-            var s = d.getSeconds();
-            s = (s < 10) ? ("0" + s) : s ;
-
-            datetext = datetext + " " + h + ":" + m + ":" + s;
-
-            $('#datepicker-from').val(datetext);
-        }
-        });
-
-        // date to
-        $('#datepicker-to').datepicker({
-        dateFormat: 'yy-mm-dd',
-        onSelect: function(datetext) {
-            var d = new Date(); // for now
-
-            var h = d.getHours();
-            h = (h < 10) ? ("0" + h) : h ;
-
-            var m = d.getMinutes();
-            m = (m < 10) ? ("0" + m) : m ;
-
-            var s = d.getSeconds();
-            s = (s < 10) ? ("0" + s) : s ;
-
-            datetext = datetext + " " + h + ":" + m + ":" + s;
-
-            $('#datepicker-to').val(datetext);
-        }
-        });
-
-    });
+   
 
 // charts ============================================================================================================================================
   
-      const month = {!! json_encode($month) !!};
+      const month = {!! json_encode($months) !!};
       const count = {!! json_encode($count) !!};
       const data2 = {!! json_encode($data2) !!};
 
@@ -1338,11 +1401,10 @@
             
            
             // find duplicate month
-                if (i == data2.length-1 || data2[i].created_at.slice(0,7) != data2[i+1].created_at.slice(0,7)) {
-         
-                    container_mon =  data2[i].created_at.slice(0,7);
+                if (i == data2.length-1 || data2[i].created_at.slice(0,10) != data2[i+1].created_at.slice(0,10)) {
+                        
+                    container_mon =  data2[i].created_at.slice(0,10);
                     month_arr.push(container_mon);
-                   
 
             // for chart data 
                     if( data2[i].system == 'Citrix')
@@ -1475,7 +1537,18 @@
             document.getElementById('myChart'),
             config
         );
- </script>
 
+// download unfiltered data
+
+    if( status == 'All'||  systems == 'All'||  personel == 'All' || from == '' && to == ''){
+        var href = '<a href="{{url("export")}}/' + null + '/' + null +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                        '</a>';
+                    
+            $('.download').html(href);
+                
+    }          
+
+</script>
 </html>
                     

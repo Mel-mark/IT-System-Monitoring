@@ -26,15 +26,16 @@ Route::post('/edit_report', [reportsController::class,'edit_report'])->name('edi
 Route::post('/cancel', [reportsController::class,'cancel'])->name('cancel');
 Route::post('/resolve_report', [reportsController::class,'resolve_report'])->name('/resolve_report');
 Route::post('/update_report', [reportsController::class,'update_report'])->name('update_report');
+Route::post('/addCSV', [reportsController::class,'addCSV'])->name('addCSV');
 
-// Route::get('/export', [reportsController::class,'export'])->name('export');
-// Route::post('/export', [reportsController::class,'export'])->name('export');
-// Route::get('/export/{from}/{to}/{personel}/{status}', [reportsController::class,'export'])->name('export');
-Route::get('/export/{personel}', [reportsController::class,'export'])->name('export');
+
 Route::post('/filter', [reportsController::class,'filter'])->name('/filter');
+
 
 // pages
 // Route::get('/history', [reportsController::class,'history'])->name('history');
+Route::get('/getHistoryDdata', [reportsController::class,'getHistoryDdata']);
+Route::get('/export/{from}/{to}/{status}/{systems}/{personel}', [reportsController::class,'export'])->name('export');
 Route::get('/admin', [reportsController::class,'admin'])->name('admin');
 Route::get('/guest', [reportsController::class,'guest'])->name('guest');
 Route::get('/logout', [reportsController::class,'logout'])->name('logout');

@@ -46,10 +46,7 @@ h2{
 .logout-logo{
     width:25px;
 }
-.download{
-    width:30px;
 
-}
 .card-header{
     float:left;
 }
@@ -75,6 +72,7 @@ td{
 .table-status{
     font-size: 25px;
     font-weight: 500;
+    
 }
 
 .card-th{
@@ -104,6 +102,9 @@ td{
 }
 .hidethis{
     opacity: 0;
+    padding: 0;
+    margin: 0;
+    size: 5px;
 }
 /* containers ====================================== */
 .container-edit{
@@ -155,8 +156,9 @@ td{
     transition: 0s
   }
 /* History ---------------------------------00000000000000000000--------------------------------000000000000000000000000000-------------------------------------*/
-
-/* hover ---------------------------------------------------------------------- */
+   
+      
+/* hover  add---------------------------------------------------------------------- */
 .hover {
     margin-top: -50px;
     --s: 0.1em;   /* the thickness of the line */
@@ -175,22 +177,56 @@ td{
     --_p: 100%
   }
   /* hover cards ------------------------------------------------------------ */
-/* overview */
-  .hovertext {
-    float: right;
-    width: 46%;
-    margin-top: 40px;
-    border-radius: 10px;
-    background-color:rgb(156, 180, 204);
+   /* status - status */
+   .status-hover{
     position: relative;
-    border-bottom: 1px dotted black;
+    
+    }
+    .status-hover:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        max-width: 300px;
+        background-color: rgb(207, 210, 207);
+        color: black;
+        text-align: center;
+        border-radius: 5px;
+        padding: 10px ;
+        transition: opacity 1s ease-in-out;
+        position: absolute;
+        z-index: 1;
+        left: 10%;
+        top: 100%;
+        font-size: 13px;
+    }
+
+    .status-hover:hover:before {
+        opacity: 0.9;
+        visibility: visible;
+    }
+
+/* overview */
+   
+   
+  .hovertext {
+   position: relative;
   }
-  
+  .overview-container{
+       
+       float: right;
+       width: 46%;
+       margin-top: 40px;
+       border-radius: 10px;
+       background-color:rgb(156, 180, 204);
+       position: relative;
+       border-bottom: 1px dotted black;
+  }
   .hovertext:before {
     content: attr(data-hover);
     visibility: hidden;
     opacity: 0;
     width: 200px;
+    font-size: 20px;
     background-color: black;
     color: #fff;
     text-align: center;
@@ -200,8 +236,8 @@ td{
   
     position: absolute;
     z-index: 1;
-    left: -200px;
-    top: 0;
+    left: -220px;
+    top: -10px;
   }
   
   .hovertext:hover:before {
@@ -209,40 +245,53 @@ td{
     visibility: visible;
   }
 /* status */
-  .hovertext-status{
+
+    .hovertext-status{
         float: left;
         width: 50%;
         background-color:white;
         margin-top: 40px;
         border-radius: 10px;
+    }
+    .myh1hover{
         position: relative;
-        border-bottom: 1px dotted black;
- }
-   
- .hovertext-status:before {
-    content: attr(data-hover);
-    visibility: hidden;
-    opacity: 0;
-    width: 250px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px ;
-    transition: opacity 1s ease-in-out;
-  
-    position: absolute;
-    z-index: 1;
-    left: 100%;
-    top: 0;
-  }
-  
-  .hovertext-status:hover:before {
+
+    }
+    
+    .myh1hover:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: 250px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 10px ;
+        transition: opacity 1s ease-in-out;
+        font-size: 20px;
+
+        position: absolute;
+        z-index: 1;
+        left: 650%;
+        top: -5px;
+    }
+    
+  .myh1hover:hover:before {
+    
     opacity: 0.9;
     visibility: visible;
   }
   /* history */
-
+    .history-body{
+        margin:10px;
+    }
+    .filterbutton{
+        background-color: white;
+        border: 0;
+        border-left: 1px solid black;
+        font-size: 25px;
+    }
     .filtration{
         float: right;
         padding:2px;
@@ -254,6 +303,10 @@ td{
 
     }
 
+    .history-card{
+        position: relative;
+        
+    }
     .hovertext-history{
         border-radius: 10px;
         padding:10px;
@@ -261,16 +314,14 @@ td{
         margin-top: 50px;
         background-color: white;
         margin-bottom: 20px;
-
-        position: relative;
-        border-bottom: 1px dotted black;
+        width:100%;
   }
+
   
- .hovertext-history:before {
+ .history-card:before {
     content: attr(data-hover);
     visibility: hidden;
     opacity: 0;
-    width: 270px;
     background-color: black;
     color: #fff;
     text-align: center;
@@ -281,10 +332,49 @@ td{
     position: absolute;
     z-index: 1;
     left: 0;
-    top: -50px;
+    top: 50px;
+    font-size: 20px;
+
   }
   
-  .hovertext-history:hover:before {
+  .history-card:hover:before {
     opacity: 1;
     visibility: visible;
   }
+
+  .download{
+    width:40px;
+    background-color: white;
+    border: 0;
+   padding:5px;
+   margin-top: 3px; 
+   position: relative;
+}
+
+.download:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 200px;
+    background-color: rgb(207, 210, 207);
+    color: black;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px ;
+    transition: opacity 1s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    left: 10%;
+    top: 100%;
+    font-size: 13px;
+
+  }
+  
+  .download:hover:before {
+    opacity: 0.9;
+    visibility: visible;
+  }
+ .csv{
+    font-size:20px;
+    float:right;
+ }

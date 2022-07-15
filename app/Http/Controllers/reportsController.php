@@ -10,6 +10,8 @@ use Carbon\CarbonPeriod;
 use Session;
 use Response;
 use Illuminate\Pagination\Paginator;
+use Symfony\Component\Console\Input\Input;
+
 
 class reportsController extends Controller
 {
@@ -87,16 +89,18 @@ class reportsController extends Controller
             $dateMinusOneMonth = Carbon::parse($now)->subMonth()->format('Y-m-d');
 
             $weeks = reports::select('*')->where('created_at','>',$dateMinusOneWeek)->orderBy('pri_level', 'ASC')->count();
-            $weeks_data = reports::select('*')->where('created_at','>',$dateMinusOneWeek)->get();
-            $months = reports::select('*')->where('created_at','>',$dateMinusOneMonth)->orderBy('pri_level', 'ASC')->count();
+            $weeks_data = reports::select('*')->where('created_at','>=',$dateMinusOneWeek)->get();
+
+
+            $months = reports::select('*')->whereBetween('created_at', [$dateMinusOneWeek, $today])->orderBy('created_at', 'ASC')->count();
 
         // data for ongoing report/ticket ------------------------------------------------------------------------------------------------------------------------
-            $data = reports::select('*')->where('status','=','Ongoing')->orderBy('pri_level', 'ASC')->get();
-            $data2 = reports::select('*')->orderBy('created_at', 'ASC')->get();
+            $data = reports::select('*')->orderBy('pri_level', 'ASC')->get();
+            $data2 = reports::select('*')->whereBetween('created_at', [$dateMinusOneWeek, $today])->orderBy('created_at', 'ASC')->where('status','!=','Ongoing')->get();
 
         // history data -------------------------------------------------------------------------------------------------------------------------------------------
             $cancel = canceled_reports::all();
-            $History_reports = reports::select('*')->where('status','!=','Ongoing')->latest()->simplePaginate(10);
+            $History_reports = reports::select('*')->where('status','!=','Ongoing')->get();
 
         // month for chart ----------------------------------------------------------------------------------------------------------------------------------------
             foreach ($data2 as $result) {
@@ -104,7 +108,7 @@ class reportsController extends Controller
                     array_push($count,$result->pri_level);
             }
             
-            return view('admin/dashboard_admin',compact('data','data2','weeks','month','weeks_data','count','system','cancel','History_reports'));
+            return view('admin/dashboard_admin',compact('data','data2','weeks','months','weeks_data','count','system','cancel','History_reports'));
 
           }else{
 
@@ -112,7 +116,81 @@ class reportsController extends Controller
 
           }
     }
+    // get history data 
+    public function getHistoryDdata(request $request)
+    {
+        // $data = reports::select('*')->where('status','!=','Ongoing')->get();
+      
+        $info = [
+            'draw' => $request->draw,
+            'data' => [],
+            'total' => 0,
+        ];
+        $data_array = [];
+        $search = $request->input('search.value');
+        
+        $reports = reports::orWhere( function($data) use ( $search ) {
+            $data->where( "s_description", "LIKE", "%".$search."%" )
+                 ->orwhere( "l_description", "LIKE", "%".$search."%" )
+                 ->orwhere( "name", "LIKE", "%".$search."%" )
+                 ->orwhere( "comment", "LIKE", "%".$search."%" )
+                 ->orwhere( "system", "LIKE", "%".$search."%" )
+                 ->orwhere( "pri_level", "LIKE", "%".$search."%" )
+                 ->orwhere( "status", "LIKE", "%".$search."%" )
+                 ->orwhere( "ass_personel", "LIKE", "%".$search."%" );
+        } )->dateFilter( $request->from_date, 
+                        $request->to_date, 
+                        $request->System,
+                        $request->Status,
+                        $request->Personel)->take( $request->length )->skip( $request->start )->get();
    
+        $info['total'] = reports::orWhere( function($data) use ( $search ) {
+            $data->where( "s_description", "LIKE", "%".$search."%" )
+                    ->orwhere( "l_description", "LIKE", "%".$search."%" )
+                    ->orwhere( "name", "LIKE", "%".$search."%" )
+                    ->orwhere( "comment", "LIKE", "%".$search."%" )
+                    ->orwhere( "system", "LIKE", "%".$search."%" )
+                    ->orwhere( "pri_level", "LIKE", "%".$search."%" )
+                    ->orwhere( "status", "LIKE", "%".$search."%" )
+                    ->orwhere( "ass_personel", "LIKE", "%".$search."%" );
+        } )->dateFilter( $request->from_date, 
+                        $request->to_date, 
+                        $request->System,
+                        $request->Status,
+                        $request->Personel )->count();
+
+        $sl_no_counter = ( $request->start == 0 )? 1 : $request->start+1;
+
+        foreach( $reports as $post ){
+            $post->sl_no = $sl_no_counter;
+         
+            $create = str_split($post->created_at,10);
+            $update = str_split($post->updated_at,10);
+
+            array_push($data_array,[
+                            'id' => $post->id,
+                            '#' => $sl_no_counter,
+                            'Title'=> $post->s_description,
+                            'Description'=> $post->l_description,
+                            'Name'=> $post->name,
+                            'Comment'=> $post->comment,
+                            'System'=> $post->system,
+                            'Pri_level'=> $post->pri_level,
+                            'Status'=> $post->status,
+                            'Personel'=> $post->ass_personel,
+                            'Submitted'=> $create[0],
+                            'Completed'=> $update[0],
+                            'created_at'=> $post->created_at,
+                            ]);   
+                            
+            $sl_no_counter++;
+        }
+
+        $info['data'] = $data_array;
+      
+        return $info;
+    
+    }
     // log in as guest
     public function logout(request $request)
     {
@@ -167,190 +245,113 @@ class reportsController extends Controller
          return back()->with('Failed','Something went wrong');
         }
     }
-    // filter
-    public function filter(request $request)
-    {
-        $data = [];
-        // if date is not empty
-        if($request->from != null || $request->to != null){
-           
-            $from = Carbon::parse($request->from)->startOfDay()->toDateTimeString(); // 2018-09-29 00:00:00
-            $to = Carbon::parse($request->to)->endOfDay()->toDateTimeString(); // 2018-09-29 23:59:59
-
-                // if status == All 
-                    if($request->status == 'All' ){
-
-                        // if personle == All 
-                            if($request->personel == 'All' )
-                            {   
-                                if($request->systems  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->latest()->simplePaginate(10);
-
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('system','=',$request->systems)->latest()->simplePaginate(10);
-                                }
-                            }else{
-                                if($request->systems  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('ass_personel','=',$request->personel)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->latest()->simplePaginate(10);
-                                    
-                                }
-                            }
-                    }else{
-                            if($request->personel == 'All' )
-                            {
-                                if($request->systems  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('system','=',$request->systems)->latest()->simplePaginate(10);
-                                }
-                            }else{
-                                if($request->systems  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->latest()->simplePaginate(10);
-                                }
-                               
-                            }
-                    }
-                    
-            }else{
-                    if($request->status == 'All' ){
-                        // if personle == All 
-                            if($request->personel == 'All' )
-                            {
-                                if($request->system  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('system','=',$request->system)->latest()->simplePaginate(10);
-                                }
-                            }else{
-                                if($request->system  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('ass_personel','=',$request->personel)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('ass_personel','=',$request->personel)->where('system','=',$request->system)->latest()->simplePaginate(10);
-                                }
-                            }
-                    }else{
-                            if($request->personel == 'All' )
-                            {
-                                if($request->system  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->where('system','=',$request->system)->latest()->simplePaginate(10);
-                                }
-                            }else{
-                                if($request->system  == 'All'){
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->latest()->simplePaginate(10);
-                                }else{
-                                    $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->where('system','=',$request->system)->latest()->simplePaginate(10);
-                                }
-                            }
-                    }
-        }  
-            
-            return $data;
-    
-    }
-
+   
     public function export(request $request)
     {
-        echo $request;
         // get data based on inputs of filter
+            if($request->from != 'null' || $request->to != 'null' ){
+            
+                $from = Carbon::parse($request->from)->startOfDay()->toDateTimeString(); // 2018-09-29 00:00:00
+                $to = Carbon::parse($request->to)->endOfDay()->toDateTimeString(); // 2018-09-29 23:59:59
 
-    //     $data = [];
+                    // if status == All 
+                        if($request->status == 'All' ){
 
-    //     // if date is not empty
-    //     if($request->from != null || $request->to != null){
-           
-    //         $from = Carbon::parse($request->from)->startOfDay()->toDateTimeString(); // 2018-09-29 00:00:00
-    //         $to = Carbon::parse($request->to)->endOfDay()->toDateTimeString(); // 2018-09-29 23:59:59
+                            // if personle == All 
+                                if($request->personel == 'All' )
+                                {   
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->get();
 
-    //             // if status == All 
-    //                 if($request->status == 'All' ){
-
-    //                     // if personle == All 
-    //                         if($request->personel == 'All' )
-    //                         {
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->get();
-    //                         }else{
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('ass_personel','=',$request->personel)->get();
-    //                         }
-    //                 }else{
-    //                         if($request->personel == 'All' )
-    //                         {
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->get();
-    //                         }else{
+                                    }else{
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('system','=',$request->systems)->get();
+                                    }
+                                }else{
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('ass_personel','=',$request->personel)->get();
+                                    }else{
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->get();
+                                        
+                                    }
+                                }
+                        }else{
+                                if($request->personel == 'All' )
+                                {
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->get();
+                                    }else{
+                                        $data  = reports::select('*')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('system','=',$request->systems)->get();
+                                    }
+                                }else{
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->get();
+                                    }else{
+                                        $data  = reports::select('*')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->get();
+                                    }
                                 
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->whereBetween('created_at', [$from, $to])->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->get();
-                               
-    //                         }
-    //                 }
-                    
-    //         }else{
-    //                 if($request->status == 'All' ){
-    //                     // if personle == All 
-    //                         if($request->personel == 'All' )
-    //                         {
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->get();
-    //                         }else{
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->where('ass_personel','=',$request->personel)->get();
-    //                         }
-    //                 }else{
-    //                         if($request->personel == 'All' )
-    //                         {
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->get();
-    //                         }else{
-    //                             $data  = reports::select('*')->where('status','!=','Ongoing')->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->get();
-    //                         }
-    //                 }
-    //     }  
+                                }
+                        }
+                        
+                }else{
+                        if($request->status == 'All' ){
+                            // if personle == All 
+                                if($request->personel == 'All' )
+                                {
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->get();
+                                    }else{
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->where('system','=',$request->systems)->get();
+                                    }
+                                }else{
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->where('ass_personel','=',$request->personel)->get();
+                                    }else{
+                                        $data  = reports::select('*')->where('status','!=','Ongoing')->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->get();
+                                    }
+                                }
+                        }else{
+                                if($request->personel == 'All' )
+                                {
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','=',$request->status)->get();
+                                    }else{
+                                        $data  = reports::select('*')->where('status','=',$request->status)->where('system','=',$request->systems)->get();
+                                    }
+                                }else{
+                                    if($request->systems  == 'All'){
+                                        $data  = reports::select('*')->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->get();
+                                    }else{
+                                        $data  = reports::select('*')->where('status','=',$request->status)->where('ass_personel','=',$request->personel)->where('system','=',$request->systems)->get();
+                                    }
+                                }
+                        }
+            }  
+   
 
-    //     // $data  = reports::select('*')->where('status','!=','Ongoing')->get();
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=file.csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );      
 
-    //     $headers = array(
-    //         "Content-type" => "text/csv",
-    //         "Content-Disposition" => "attachment; filename=file.csv",
-    //         "Pragma" => "no-cache",
-    //         "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-    //         "Expires" => "0"
-    //     );      
-
-    //     $columns = array('id');
-    // // , 'Title', 'Description', 'Name', 'Comment', 'System', 'Priority Level', 'Status', 'Personel', 'created_at', 'updated_at'
-    //     $callback = function() use ($data, $columns)
-    //     {
-    //         $file = fopen('php://output', 'w');
-    //         fputcsv($file, $columns);
+        $columns = array('Title', 'Description', 'Name', 'Comment', 'System', 'Priority Level', 'Status', 'Personel', 'created_at', 'updated_at');
+        $callback = function() use ($data, $columns)
+        {
+            $file = fopen('php://output', 'w'); 
+            fputcsv($file, $columns);
     
-    //         foreach($data as $review) {
-    //             fputcsv($file, array($review->id));
-    //         //   ,$review->s_description,$review->l_description,$review->name,$review->comment,$review->system,$review->pri_level,$review->status,$review->ass_personel,$review->created_at,$review->updated_at
-    //         }
-    //         fclose($file);
-    //     };
-    //     return Response::stream($callback, 200, $headers);
-    }
-
-    // history 
-    public function history()
-    {
-        
-            if(Session::has('user'))
-            {
-                
-                        $cancel = canceled_reports::all();
-                        $data = reports::select('*')->where('status','!=','Ongoing')->latest()->simplePaginate(10);
-
-                        return view('admin/history',compact('data','cancel'));
-
-            }else{
-
-                return view('index');
-
+            foreach($data as $review) {
+                fputcsv($file, array($review->s_description,$review->l_description,$review->name,$review->comment,$review->system,$review->pri_level,$review->status,$review->ass_personel,$review->created_at,$review->updated_at));
+             
             }
+            fclose($file);
+        };
+        return Response::stream($callback, 200, $headers);
     }
+
+  
     public function edit_report(reports $reports,request $request)
     {
         
@@ -418,6 +419,61 @@ class reportsController extends Controller
             }
         }else{
          return back()->with('Failed','Something went wrong');
+        }
+    }
+
+    //CSV file upload and save to database
+    public function addCSV(request $request,reports $reports)
+    {
+        $fileMimes = array(
+            'text/x-comma-separated-values',
+            'text/comma-separated-values',
+            'application/octet-stream',
+            'application/vnd.ms-excel',
+            'application/x-csv',
+            'text/x-csv',
+            'text/csv',
+            'application/csv',
+            'application/excel',
+            'application/vnd.msexcel',
+            'text/plain'
+        );
+     
+        $file = $request->file('file');
+        echo $_FILES['file']['name'];
+         // Validate whether selected file is a CSV file
+        if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $fileMimes))
+        {
+ 
+            // Open uploaded CSV file with read-only mode
+            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
+ 
+            // Skip the first line
+            fgetcsv($csvFile);
+ 
+            // Parse data from CSV file line by line
+            while (($getData = fgetcsv($csvFile, 10000, ",")) !== FALSE)
+            {
+                
+                // save files to database
+                $reports = new reports();
+                // Get row data
+                $reports->s_description = $getData[0];
+                $reports->l_description = $getData[1];
+                $reports->name = $getData[2];
+                $reports->comment = $getData[3];
+                $reports->system = $getData[4];
+                $reports->pri_level = $getData[5];
+                $reports->status = $getData[6];
+                $reports->ass_personel = $getData[7];
+                $reports->created_at = $getData[8];
+              
+                $res = $reports->save();
+            }
+ 
+            // Close opened CSV file
+            fclose($csvFile);
+             return redirect('admin');
         }
     }
 }
