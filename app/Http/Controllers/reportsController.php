@@ -42,31 +42,34 @@ class reportsController extends Controller
         // sytem array
         $system = ['Citrix','Data Center Server','eClipse','MITS Server','Subic NAS','TSM Mobile','TSM Office'];
 
+      
         // date formating for last week and last month --------------------------------------------------------------------------------------------------------------------
             $now = Carbon::now();
+            
             $today = Carbon::parse($now)->format('Y-m-d');
             $dateMinusOneWeek = Carbon::parse($now)->subWeek()->format('Y-m-d');
             $dateMinusOneMonth = Carbon::parse($now)->subMonth()->format('Y-m-d');
 
             $weeks = reports::select('*')->where('created_at','>',$dateMinusOneWeek)->orderBy('pri_level', 'ASC')->count();
-            $weeks_data = reports::select('*')->where('created_at','>',$dateMinusOneWeek)->get();
-            $months = reports::select('*')->where('created_at','>',$dateMinusOneMonth)->orderBy('pri_level', 'ASC')->count();
-
+         
         // data for ongoing report/ticket ------------------------------------------------------------------------------------------------------------------------
             $data = reports::select('*')->where('status','=','Ongoing')->orderBy('pri_level', 'ASC')->get();
-            $data2 = reports::select('*')->orderBy('created_at', 'ASC')->get();
+            $data2 = reports::select('*')->where('created_at','>=',$dateMinusOneWeek)->orderBy('created_at', 'ASC')->get();
 
         // history data -------------------------------------------------------------------------------------------------------------------------------------------
             $cancel = canceled_reports::all();
-            $History_reports = reports::select('*')->where('status','!=','Ongoing')->latest()->simplePaginate(10);
+            $History_reports = reports::select('*')->where('status','!=','Ongoing')->get();
 
+        // yesterday file
+            $yesterday_data = reports::select('*')->where('status','=','Ongoing')->where('created_at','<',$now)->orderBy('created_at', 'ASC')->get();
+            $today_data = reports::select('*')->where('status','=','Ongoing')->where('created_at','>',$now)->orderBy('created_at', 'ASC')->get();
         // month for chart ----------------------------------------------------------------------------------------------------------------------------------------
             foreach ($data2 as $result) {
                     array_push($month,$result->created_at);
                     array_push($count,$result->pri_level);
             }
-            
-            return view('user/dashboard_guest',compact('data','data2','weeks','month','weeks_data','count','system','cancel','History_reports'));
+    
+            return view('user/dashboard_guest',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
 
         
     }
@@ -84,31 +87,31 @@ class reportsController extends Controller
 
         // date formating for last week and last month --------------------------------------------------------------------------------------------------------------------
             $now = Carbon::now();
+            
             $today = Carbon::parse($now)->format('Y-m-d');
             $dateMinusOneWeek = Carbon::parse($now)->subWeek()->format('Y-m-d');
             $dateMinusOneMonth = Carbon::parse($now)->subMonth()->format('Y-m-d');
 
             $weeks = reports::select('*')->where('created_at','>',$dateMinusOneWeek)->orderBy('pri_level', 'ASC')->count();
-            $weeks_data = reports::select('*')->where('created_at','>=',$dateMinusOneWeek)->get();
-
-
-            $months = reports::select('*')->whereBetween('created_at', [$dateMinusOneWeek, $today])->orderBy('created_at', 'ASC')->count();
-
+         
         // data for ongoing report/ticket ------------------------------------------------------------------------------------------------------------------------
-            $data = reports::select('*')->orderBy('pri_level', 'ASC')->get();
-            $data2 = reports::select('*')->whereBetween('created_at', [$dateMinusOneWeek, $today])->orderBy('created_at', 'ASC')->where('status','!=','Ongoing')->get();
+            $data = reports::select('*')->where('status','=','Ongoing')->orderBy('pri_level', 'ASC')->get();
+            $data2 = reports::select('*')->where('created_at','>=',$dateMinusOneWeek)->orderBy('created_at', 'ASC')->get();
 
         // history data -------------------------------------------------------------------------------------------------------------------------------------------
             $cancel = canceled_reports::all();
             $History_reports = reports::select('*')->where('status','!=','Ongoing')->get();
 
+        // yesterday file
+            $yesterday_data = reports::select('*')->where('status','=','Ongoing')->where('created_at','<',$now)->orderBy('created_at', 'ASC')->get();
+            $today_data = reports::select('*')->where('status','=','Ongoing')->where('created_at','>',$now)->orderBy('created_at', 'ASC')->get();
         // month for chart ----------------------------------------------------------------------------------------------------------------------------------------
             foreach ($data2 as $result) {
                     array_push($month,$result->created_at);
                     array_push($count,$result->pri_level);
             }
-            
-            return view('admin/dashboard_admin',compact('data','data2','weeks','months','weeks_data','count','system','cancel','History_reports'));
+    
+            return view('admin/dashboard_admin',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
 
           }else{
 
@@ -138,7 +141,7 @@ class reportsController extends Controller
                  ->orwhere( "pri_level", "LIKE", "%".$search."%" )
                  ->orwhere( "status", "LIKE", "%".$search."%" )
                  ->orwhere( "ass_personel", "LIKE", "%".$search."%" );
-        } )->dateFilter( $request->from_date, 
+        } )->orderBy('created_at','DESC')->dateFilter( $request->from_date, 
                         $request->to_date, 
                         $request->System,
                         $request->Status,

@@ -30,7 +30,7 @@
                    {{$counter = 0;}}
                @endphp 
                                    
-<!-- loop report -->
+<!-- loop report system status -->
                    @foreach ($data as $report)
                           
 
@@ -193,7 +193,7 @@
 
 
 <!-- weeks data for status card -->
-                       @foreach ($weeks_data as $report)
+                       @foreach ($data2 as $report)
                           
 
                           <!-- check if system is Citrix & not Complete -->
@@ -296,7 +296,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
                 <div class="container-fluid">
-                    <div>
+                    <div >
                         <img src="{{ asset('asset/image/logod.png') }}" class="logos"> 
                         <span class="melmarkpogi">
                             IT System Monitoring
@@ -317,15 +317,12 @@
         <div  class="p-3" >
 
             <div class="container-fluid">
-        
-            
             <!-- overview ===================================================================================================================================== -->
                     <div  class="overview-container">
-                        <div class="card" > 
+                        <div class="card"> 
                     
                         <div class="card-header"> 
                             <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
-                    
                         </div>
 
                             <div> 
@@ -339,7 +336,7 @@
             
                                               
                             
-                                        <ul class="card-title">
+                                        <ul>
                                             <table>
                                                 <tbody > 
                                                     <strong>
@@ -370,19 +367,20 @@
 
             <!-- status======================================================================================================= -->
                 <div class="hovertext-status" >
-                    <div class="card" >
+                    <div class="card">
                         <div class="card-header"> 
                             <h1 class="myh1hover" data-hover="The is the Status Card where all system is listed and being sorted, it indicates the highest priority level of the system, here you can add and see the reports/ticked of employee.">Status</h1>
                             <div class="add">
-                                <a data-toggle="modal" data-target="#addmodal"><span class="hover">Add</span>
-                                    <img src="{{ asset('asset/image/add.png') }}" class="logos"> 
-                                </a>
-                                
+                                <span class="hover">
+                                        <a data-toggle="modal" data-target="#addmodal" class="status-hover"  data-hover="Submit report">
+                                            <img src="{{ asset('asset/image/add.png') }}" class="logos"> 
+                                        </a>
+                                </span>
                             </div>
                         </div>
-
-                        <div class="card-body">
-                            <table class="table table-borderedless">
+                        <br>
+                        <div >
+                            <table class="table table-borderedless" >
                             <thead>
                                 <tr class="card-th">
                                     <th>#</th>
@@ -394,7 +392,7 @@
                                         <!-- system loop -->
                                                 @foreach($system as $sys)
                                             
-                                                <tr>
+                                                <tr >
                                                         <td>{{$counter = $counter + 1;}}</td>
                                                         <td> 
                                                     
@@ -410,7 +408,7 @@
                                                                     @if($pri1 == 'Outage')
                                                                             <h4  class="status-hover"  data-hover=" A serious issue preventing ALL of your users from using TSM">
                                                                                 <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge  bg-dark text-dark" style="font-size:15px;">0
-                                                                                    </span >{{$pri1 ;}} ({{$i1}})
+                                                                                    </span > {{$pri1 ;}} ({{$i1}})
                                                                                 </a>
                                                                             </h4>
                                                                         @elseif($pri1 == 'Major Impact')
@@ -647,7 +645,7 @@
 
                                     <!-- modal list-->    
                                         <div class="modal fade"  id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" >
+                                            <div class="modal-dialog modal-xl" >
                                                 <div class="modal-content" >
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="myModal2Label">Report List</h5>
@@ -658,7 +656,7 @@
                                                 
                                                     <div class="modal-body"  id="tableData">
                                                         
-                                                        <!-- data came from js at the button -->
+                                                        <!-- data came from js  -->
                                                     </div>
                                                     <div >
                                                         <div id="hidebutton">
@@ -702,7 +700,7 @@
           
             <!-- History ======================================================================================================================= -->
             <div  class="hovertext-history" >
-                    <h1 class="history-card" data-hover="History of done tickets">
+                    <h1 class="history-card" data-hover="History of closed tickets">
                         History 
                     </h1>
                         <div style="float:left;" >
@@ -810,8 +808,8 @@
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content" style="padding:10px;">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="myModalLabel">Add Reports</h5>
-                                    <a data-toggle="modal" data-target="#filemodal"><span class="csv">Upload CSV Files +</span></a>
+                                <h3 class="modal-title" id="myModalLabel">Add Reports</h3>
+                                    <a data-toggle="modal" data-target="#filemodal"><span class="hover"><b> Upload CSV Files </b></span> <img src="{{ asset('asset/image/upload.png') }}" class="logos"> </a>
                                     
                             </div>
                             <div class="modal-body" >
@@ -915,9 +913,7 @@
                                     <div class="modal-content" >
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="myModal2Label">Upload CSV File</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
+                                                
                                         </div>
                                         <div class="modal-body">
                                             <form action="{{ url('/addCSV')}}" method="POST" enctype="multipart/form-data">
@@ -932,15 +928,24 @@
                                                                                              
                                                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. once you submited the data you will not be able to delete or undo it.<br><br>
                                                 </h5>
+                                                
                                                 <div class="input-group">
                                                     <input type="file" name="file" id="file" class="form-control" required>
                                                 </div>
-                                            
+                                                <br>
+                                                <br>
                                         </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-success">Upload</button>
-                                            </div>
                                             </form>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">Cancel</span>
+                                                </button>   
+                                            </div>
+
+                                            
+                                                <br>
+                                                <br>
                                     </div>
                                 </div>
                 </div>
@@ -967,6 +972,7 @@
 <script>
 // creating new table inside js because modal has its own table that make it difficult to arrange, cannot build a table inside a table T_T
 // global variable
+
     var  from = $('.from').val();
     var  to = $('.to').val();
     var  status = $('.status').val();
@@ -978,7 +984,7 @@
     var close_option =   ' </tr>' ;
     var table_foot = ' </tbody>' +
                             '</table>';
-    var table_th = '<table>'+
+    var table_th = '<table class="table">'+
                             '<thead > '+
                                ' <tr>'+
                                    ' <th style="padding:5px;border:1px solid black;">Name</th>'+
@@ -996,6 +1002,7 @@
                             '<tbody>' ; 
         var option = '';
         var item = 0;
+// history filtration and modal ===============================================000000000000000000000000000000000000000000000000===================================
 // data table
     $(function() {
             var drawer_count = 1;
@@ -1103,6 +1110,8 @@
   
 // get data from eloquent
  const _reports = {!! json_encode($data) !!};
+ const yesterday_data = {!! json_encode($yesterday_data) !!};
+ const today_data = {!! json_encode($today_data) !!};
 
 
 // getting report id for cancel modal
@@ -1116,8 +1125,8 @@
 
 // yesterday ticket
 
-
         $('#show').on('click', function () {
+           
 
             var item =  $('#show').data('item');
 
@@ -1127,7 +1136,10 @@
                 x.style.display = "block";
                 var today = new Date();
                 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
+                var to_year = JSON.parse(today.getFullYear());
+                var to_month = JSON.parse(today.getMonth()+1);
+                var to_date = JSON.parse(today.getDate());
+                var ticket = 0;
                             // table for yesterday 
                             var table_tr = '' ; 
                                 
@@ -1138,46 +1150,37 @@
                                             '</tr>';     
                             }
                             
-                            for(var i=0;i < _reports.length;i++ )
+                            for(var i=0;i < yesterday_data.length;i++ )
                             {
 
-                                if(_reports[i].system == item){
-
-                                    // date to see if data is from yesterday
-                                      
-                                        console.log(JSON.parse(today.getDate())) ;
-
-                                        console.log( _reports[i].created_at.slice(8,10)) ;
-
-                                        if( JSON.parse(JSON.parse(today.getDate()) > _reports[i].created_at.slice(8,10))   )
-                                        {
-                                          
-                            
-                                                if(_reports[i].status != 'Complete')
+                                if(yesterday_data[i].system == item){
+ 
+                                    ticket = 1;
+                                                if(yesterday_data[i].status != 'Complete')
                                                 {
                                                     table_tr += '<tr>' + 
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].name + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].s_description + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].pri_level + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].ass_personel + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].system + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].l_description + '</td>' +
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].comment + '</td>' +                
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].created_at.slice(0,10) + '</td>' +  
-                                                                '<td style="padding:5px;border:1px solid black;">' + _reports[i].created_at.slice(11,19) + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].name + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].s_description + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].pri_level + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].ass_personel + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].system + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].l_description + '</td>' +
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].comment + '</td>' +                
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].created_at.slice(0,10) + '</td>' +  
+                                                                '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].created_at.slice(11,19) + '</td>' +
                                                                 //   Resolve button 
                                                                 '<td style="padding:5px;border:1px solid black;"> ' +
                                                                     '<form action="{{ route("/resolve_report")}}" method="POST">' +
                                                                         '@csrf' +
-                                                                        '<input name="id" value="'+ _reports[i].id  +'" hidden>'+
+                                                                        '<input name="id" value="'+ yesterday_data[i].id  +'" hidden>'+
                                                                         '<button type="submit" class="btn btn-success"  style="width:90px;margin:1px;">Resolve</button>' +
                                                                     '</form >' +
                                                                     // cancel button
-                                                                        '<button class="btn btn-danger" style="width:90px;margin:1px;" data-toggle="modal" data-target="#myModal3" onclick="mods(' +_reports[i].id +')">Cancel</button> ' +
+                                                                        '<button class="btn btn-danger" style="width:90px;margin:1px;" data-toggle="modal" data-target="#myModal3" onclick="mods(' +yesterday_data[i].id +')">Cancel</button> ' +
                                                                     // edit
                                                                     ' <form action="{{ route("edit_report")}}" method="POST">' +
                                                                             '@csrf' +
-                                                                            '<input name="id" value="'+ _reports[i].id  +'" hidden>'+
+                                                                            '<input name="id" value="'+ yesterday_data[i].id  +'" hidden>'+
                                                                             '<button type="submit" style="width:90px;margin:1px;" class="btn btn-primary" >edit</button>' +
                                                                     '</form >' +
                                                                 '</td>' +
@@ -1188,32 +1191,29 @@
 
 
                                                     table_tr += '<tr>' + 
-                                                                    '<td style="border:1px solid black;">' + _reports[i].name + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].s_description + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].pri_level + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].ass_personel + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].system + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].l_description + '</td>' +
-                                                                    '<td style="border:1px solid black;">' + _reports[i].comment + '</td>' +                
-                                                                    '<td style="border:1px solid black;">' + _reports[i].created_at.slice(0,10) + '</td>' +                
-                                                                    '<td style="border:1px solid black;">' + _reports[i].created_at.slice(11,10) + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].name + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].s_description + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].pri_level + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].ass_personel + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].system + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].l_description + '</td>' +
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].comment + '</td>' +                
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].created_at.slice(0,10) + '</td>' +                
+                                                                    '<td style="border:1px solid black;">' + yesterday_data[i].created_at.slice(11,10) + '</td>' +
                                                                     '<td style="border:1px solid black;"> </td>' +
                                                                 '</tr>';         
                                                         
 
                                                 }
                                     
-                                    }else{
-                                        table_tr += '<tr>' + 
+                                   
+                            }
+                    }
+                    if(ticket == 0){
+                                table_tr += '<tr>' + 
                                                 '<td style="border:1px solid black;" colspan="10"> <h3 style="color:red;"><center> NO OLD TICKET </center> </h3> </td>' +
                                             '</tr>'; 
-                                    }
-                            }
-
-
-                           
-
-                    }
+                           }
                     table = table_th + table_tr  + table_foot;
 
                     $("#hiddentableData").html(table);
@@ -1228,7 +1228,7 @@
 
 
 
-// created a modal function in system
+// created a modal function in system for today data
 
         // modal A 
         var ticket = 0;
@@ -1236,6 +1236,7 @@
         var button_count = 0;
 
     $(".modala").click(function () {
+
         document.getElementById("myDIV").style.display = "none";
 
         var table_tr = '' ; 
@@ -1246,47 +1247,43 @@
         $('#show').data('item',item );
 
        
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var to_year = JSON.parse(today.getFullYear());
+        var to_month = JSON.parse(today.getMonth()+1);
+        var to_date = JSON.parse(today.getDate());
                                     
 
-        for(var i=0;i < _reports.length;i++ )
+        for(var i=0;i < today_data.length;i++ )
         {
-        
-            var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            
-                    // if(  )
-             
-                    if( JSON.parse(JSON.parse(today.getDate()) <= _reports[i].created_at.slice(8,10))   && _reports[i].system == item)
-                    {
-                       
-                        ticket == 1;
-                            if(_reports[i].status != 'Complete')
+            if(today_data[i].system == item){
+                            if(today_data[i].status != 'Complete')
                             {
                                     
                                     
                                 table_tr += '<tr>' + 
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].name + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].s_description + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].pri_level + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].ass_personel + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].system + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].l_description + '</td>' +
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].comment + '</td>' +                
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].created_at.slice(0,10) + '</td>' +  
-                                            '<td style="padding:5px;border:1px solid black;">' + _reports[i].created_at.slice(11,19) + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].name + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].s_description + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].pri_level + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].ass_personel + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].system + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].l_description + '</td>' +
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].comment + '</td>' +                
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].created_at.slice(0,10) + '</td>' +  
+                                            '<td style="padding:5px;border:1px solid black;">' + today_data[i].created_at.slice(11,19) + '</td>' +
                                             //   Resolve button 
                                             '<td style="padding:5px;border:1px solid black;"> ' +
                                                 '<form action="{{ route("/resolve_report")}}" method="POST">' +
                                                     '@csrf' +
-                                                    '<input name="id" value="'+ _reports[i].id  +'" hidden>'+
+                                                    '<input name="id" value="'+ today_data[i].id  +'" hidden>'+
                                                     '<button type="submit" class="btn btn-success"  style="width:90px;margin:1px;">Resolve</button>' +
                                                 '</form >' +
                                                 // cancel button
-                                                    '<button class="btn btn-danger" style="width:90px;margin:1px;" data-toggle="modal" data-target="#myModal3" onclick="mods(' +_reports[i].id +')">Cancel</button> ' +
+                                                    '<button class="btn btn-danger" style="width:90px;margin:1px;" data-toggle="modal" data-target="#myModal3" onclick="mods(' +today_data[i].id +')">Cancel</button> ' +
                                                 // edit
                                                 ' <form action="{{ route("edit_report")}}" method="POST">' +
                                                         '@csrf' +
-                                                        '<input name="id" value="'+ _reports[i].id  +'" hidden>'+
+                                                        '<input name="id" value="'+ today_data[i].id  +'" hidden>'+
                                                         '<button type="submit" style="width:90px;margin:1px;" class="btn btn-primary" >edit</button>' +
                                                 '</form >' +
                                             '</td>' +
@@ -1298,15 +1295,15 @@
 
 
                                     table_tr += '<tr>' + 
-                                                '<td style="border:1px solid black;">' + _reports[i].name + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].s_description + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].pri_level + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].ass_personel + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].system + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].l_description + '</td>' +
-                                                '<td style="border:1px solid black;">' + _reports[i].comment + '</td>' +                
-                                                '<td style="border:1px solid black;">' + _reports[i].created_at.slice(0,10) + '</td>' +                
-                                                '<td style="border:1px solid black;">' + _reports[i].created_at.slice(11,10) + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].name + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].s_description + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].pri_level + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].ass_personel + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].system + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].l_description + '</td>' +
+                                                '<td style="border:1px solid black;">' + today_data[i].comment + '</td>' +                
+                                                '<td style="border:1px solid black;">' + today_data[i].created_at.slice(0,10) + '</td>' +                
+                                                '<td style="border:1px solid black;">' + today_data[i].created_at.slice(11,10) + '</td>' +
                                                 '<td style="border:1px solid black;"> </td>' +
                                             '</tr>';         
                                         
@@ -1315,15 +1312,17 @@
                               
                                 
                                 ticket_res = 1;
-                    }
-                    // count the number of unfinised 
-                    if( JSON.parse(JSON.parse(today.getDate()) > _reports[i].created_at.slice(8,10)) && _reports[i].system == item)
-                    {
-                        
-                         button_count = button_count + 1;
-                    }
+                    
+                   
                             
-
+                    }
+        }
+     
+        for(var i=0;i < yesterday_data.length;i++ )
+        {
+            if(yesterday_data[i].system == item && yesterday_data[i].status != 'Complete'){
+                button_count = button_count + 1;
+            }
         }
 
         if(ticket_res == 0){
@@ -1349,7 +1348,6 @@
     });
 
 
-// history filtration and modal ===============================================000000000000000000000000000000000000000000000000===================================
 // cancel modal
     function showCancel(id) {
     console.log(id);
@@ -1369,7 +1367,6 @@
 
 // charts ============================================================================================================================================
   
-      const month = {!! json_encode($months) !!};
       const count = {!! json_encode($count) !!};
       const data2 = {!! json_encode($data2) !!};
 
@@ -1488,6 +1485,7 @@
             
 
     const data = {
+        
             labels: month_arr,
             datasets: [{
             label: 'No. of report',
@@ -1495,6 +1493,7 @@
             data: Citrix,
             }],
             datasets: [{
+                
                         label: 'Citrix',
                         borderColor: 'rgb(246, 55, 236)',
                         data: Citrix,
@@ -1528,11 +1527,13 @@
         };
     
         const config = {
+           
             type: 'line',
             data: data,
-            options: {}
+            options: {
+            }
         };
-    
+       
         const myChart = new Chart(
             document.getElementById('myChart'),
             config
@@ -1551,4 +1552,3 @@
 
 </script>
 </html>
-                    

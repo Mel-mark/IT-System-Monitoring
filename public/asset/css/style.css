@@ -86,7 +86,7 @@ td{
     padding:15px;
 }
 .logos{
-    margin-top: -15px;
+    margin-top: -10px;
     width: 40px;
 }
 .melmarkpogi{
@@ -96,8 +96,7 @@ td{
 }
 .add{
     float: right;
-    font-size: 30px;
-    font-family: fantasy ;
+    font-size: 10px;
     margin-top: 10px;
 }
 .hidethis{
@@ -172,6 +171,7 @@ td{
     -webkit-background-clip: text,padding-box;
             background-clip: text,padding-box;
     transition: 0.2s;
+    
   }
   .hover:hover {
     --_p: 100%
@@ -217,7 +217,7 @@ td{
        width: 46%;
        margin-top: 40px;
        border-radius: 10px;
-       background-color:rgb(156, 180, 204);
+       background-color:white;
        position: relative;
        border-bottom: 1px dotted black;
   }
@@ -262,7 +262,7 @@ td{
         content: attr(data-hover);
         visibility: hidden;
         opacity: 0;
-        width: 250px;
+        width: 200px;
         background-color: black;
         color: #fff;
         text-align: center;
@@ -273,7 +273,7 @@ td{
 
         position: absolute;
         z-index: 1;
-        left: 650%;
+        right: 135px;
         top: -5px;
     }
     
@@ -322,6 +322,7 @@ td{
     content: attr(data-hover);
     visibility: hidden;
     opacity: 0;
+    width: 130%;
     background-color: black;
     color: #fff;
     text-align: center;
@@ -331,8 +332,8 @@ td{
   
     position: absolute;
     z-index: 1;
-    left: 0;
-    top: 50px;
+    right: 140px;
+    top: 0;
     font-size: 20px;
 
   }
