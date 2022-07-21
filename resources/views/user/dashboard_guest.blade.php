@@ -283,10 +283,6 @@
     <!-- css hardcode -->
     <link rel="stylesheet" href="{{ URL::asset('asset/css/style.css') }}">
         
-    <!-- date picker -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-
 
   <!-- data table -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
@@ -741,7 +737,7 @@
                     <br>
                     <br>
                     <hr >
-                <table class="table table-striped" id="datatable">
+                <table class="table" id="datatable">
              
                     <tbody id="history-body">
                        
@@ -919,6 +915,7 @@
                         return JSON.stringify(json); // return JSON string
                     }
                     },
+                    scrollX: true,
                     "columns": [
                       
                         { "title": '#',             "data": "#",                "name": "#",            "visible": true, "searchable": true },
@@ -929,8 +926,10 @@
                         { "title": 'System' ,       "data": "System",           "name": "System",       "visible": true, "searchable": true},
                         { "title": 'Level',         "data": "Pri_level",        "name": "Pri_level",    "visible": true, "searchable": true },
                         { 
-                            "title": 'Status',      "name": "Status",           "visible": true, "searchable": true, 
-
+                            "title": 'Job Status',      
+                            "name": "Status",           
+                            "visible": true, 
+                            "searchable": true, 
                             "mRender": function(data, type, full) {
                                 if(full.Status == 'Cancel'){
                                     return  '<a href="#"  id="modal1" onclick="showCancel(' + full.id + ')" data-toggle="modal" data-target="#myModal"> <p style="color:red;">Canceled</p> </a>';

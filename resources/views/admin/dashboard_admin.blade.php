@@ -265,15 +265,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT System Monitoring</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    
+    <title> IT System Monitoring</title>
+    <link rel="icon" href="{!! asset('asset/image/logod.png') !!}"/>
+
     <!-- bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- font awesome cdn link  -->
-   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -281,10 +281,6 @@
     <!-- css hardcode -->
     <link rel="stylesheet" href="{{ URL::asset('asset/css/style.css') }}">
         
-    <!-- date picker -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-
 
   <!-- data table -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
@@ -321,44 +317,41 @@
                     <div  class="overview-container">
                         <div class="card"> 
                     
-                        <div class="card-header"> 
-                            <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
-                        </div>
+                            <div class="card-header"> 
+                                <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
+                            </div>
 
-                            <div> 
-                            
-                                    </div>
-                                        <div class="chart">
-                                            <canvas id="myChart"></canvas>
-                                        </div> 
-                                    <div >
-                                 <!-- chart -->
-            
-                                              
-                            
-                                        <ul>
-                                            <table>
-                                                <tbody > 
-                                                    <strong>
-                                                        <tr >
-                                                            <td><h4> Citrix </h4> Last 7 Days<span class="i">({{$k1}})</span></td> 
-                                                            <td><h4> eClipse </h4> Last 7 Days<span class="i">({{$k3}})</span></td>
-                                                            <td> <h4>TSM Mobile </h4> Last 7 Days <span class="i"> ({{$k6}}) </span></td>
-                                                        </tr>
-                                                        
-                                                        <tr>
-                                                            <td><h4> Subic NAS </h4> Last 7 Days<span class="i">({{$k5}})</span></td>
-                                                            <td> <h4>TSM Office  </h4> Last 7 Days<span class="i"> ({{$k7}}) </span></td>
-                                                        </tr>
-                                                        
-                                                        <tr>  
-                                                            <td> <h4>Data Center Server </h4> Last 7 Days<span class="i"> ({{$k2}}) </span></td>
-                                                            <td><h4> MITS Serve  </h4> Last 7 Days <span class="i">({{$k4}}) </span></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </strong>
-                                            </table>
-                                        </ul> 
+                                        <div> 
+                                        
+                                                </div>
+                                                    <div class="chart">
+                                                        <canvas id="myChart"></canvas>
+                                                    </div> 
+                                                <div >
+                                            <!-- chart -->
+                                                    <ul>
+                                                        <table>
+                                                            <tbody > 
+                                                                <strong>
+                                                                    <tr >
+                                                                        <td><h4> Citrix </h4> Last 7 Days<span class="i">({{$k1}})</span></td> 
+                                                                        <td><h4> eClipse </h4> Last 7 Days<span class="i">({{$k3}})</span></td>
+                                                                        <td> <h4>TSM Mobile </h4> Last 7 Days <span class="i"> ({{$k6}}) </span></td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td><h4> Subic NAS </h4> Last 7 Days<span class="i">({{$k5}})</span></td>
+                                                                        <td> <h4>TSM Office  </h4> Last 7 Days<span class="i"> ({{$k7}}) </span></td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>  
+                                                                        <td> <h4>Data Center Server </h4> Last 7 Days<span class="i"> ({{$k2}}) </span></td>
+                                                                        <td><h4> MITS Serve  </h4> Last 7 Days <span class="i">({{$k4}}) </span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </strong>
+                                                        </table>
+                                                    </ul> 
 
 
                                     </div>
@@ -644,7 +637,7 @@
                                             @endforeach
 
                                     <!-- modal list-->    
-                                        <div class="modal fade"  id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+                                        <div class="modal fade"  id="myModal2"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
                                             <div class="modal-dialog modal-xl" >
                                                 <div class="modal-content" >
                                                     <div class="modal-header">
@@ -748,7 +741,7 @@
                     <br>
                     <br>
                     <hr >
-                <table class="table table-striped" id="datatable">
+                <table class="table" id="datatable" >
              
                     <tbody id="history-body">
                        
@@ -777,7 +770,7 @@
             <!-- end of cancel-->     
                 
             <!-- End history -------------------------------------------------------------------------------------------------------------- -->
-            <!-- modal Cancel resason ==========================================================================================-->    
+            <!-- modal submit Cancel resason ==========================================================================================-->    
                 <div class="modal fade"  id="myModal3"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" >
                                     <div class="modal-content" >
@@ -984,7 +977,7 @@
     var close_option =   ' </tr>' ;
     var table_foot = ' </tbody>' +
                             '</table>';
-    var table_th = '<table class="table">'+
+    var table_th = '<table style="overflow-x: scroll;max-width:20px;">'+
                             '<thead > '+
                                ' <tr>'+
                                    ' <th style="padding:5px;border:1px solid black;">Name</th>'+
@@ -1005,10 +998,12 @@
 // history filtration and modal ===============================================000000000000000000000000000000000000000000000000===================================
 // data table
     $(function() {
+             var width = $(window).width();
             var drawer_count = 1;
             var data = [];
-            $('#datatable').DataTable({
+           
 
+            $('#datatable').DataTable({
                  
 
                 "oLanguage": {
@@ -1024,41 +1019,41 @@
                 "serverSide": true,
                 "ordering": false,
                 "ajax": {
-                    "type": "GET",
-                    "url": "{{ url('getHistoryDdata') }}",
-                    "data": function(result) {
-                        result.from_date = document.getElementById('from_date').value;
-                        result.to_date = document.getElementById('to_date').value;
-                        result.Personel = document.getElementById('pe').value;
-                        result.System  = document.getElementById('sy').value;
-                        result.Status = document.getElementById('st').value;
-                      
+                        "type": "GET",
+                        "url": "{{ url('getHistoryDdata') }}",
+                        "data": function(result) {
+                            result.from_date = document.getElementById('from_date').value;
+                            result.to_date = document.getElementById('to_date').value;
+                            result.Personel = document.getElementById('pe').value;
+                            result.System  = document.getElementById('sy').value;
+                            result.Status = document.getElementById('st').value;
+                            
 
+                        },
+                        "dataFilter": function(data) {
+                            drawer_count++;
+                            var json = jQuery.parseJSON(data);
+                            json.draw = json.draw;
+                            json.recordsTotal = json.total;
+                            json.recordsFiltered = json.total;
+                            json.data = json.data;
+
+
+                            $('#list_table_processing').css('display', 'none');
+                            return JSON.stringify(json); // return JSON string
+                        }
                     },
-                    "dataFilter": function(data) {
-                        drawer_count++;
-                        var json = jQuery.parseJSON(data);
-                        json.draw = json.draw;
-                        json.recordsTotal = json.total;
-                        json.recordsFiltered = json.total;
-                        json.data = json.data;
-
-
-                        $('#list_table_processing').css('display', 'none');
-                        return JSON.stringify(json); // return JSON string
-                    }
-                    },
+                    scrollX: true,
                     "columns": [
-                      
-                        { "title": '#',             "data": "#",                "name": "#",            "visible": true, "searchable": true },
-                        { "title": 'Title',         "data": "Title",            "name": "Title",        "visible": true, "searchable": true },
-                        { "title": 'Description',   "data": "Description",      "name": "Description",  "visible": true, "searchable": true},
-                        { "title": 'Name' ,         "data": "Name",             "name": "Name",         "visible": true, "searchable": true},
-                        { "title": 'Comment' ,      "data": "Comment",          "name": "Comment",      "visible": true, "searchable": true},
-                        { "title": 'System' ,       "data": "System",           "name": "System",       "visible": true, "searchable": true},
-                        { "title": 'Level',         "data": "Pri_level",        "name": "Pri_level",    "visible": true, "searchable": true },
+                        { "title": '#',             "data": "#",                 "width": "2%",     "name": "#",            "visible": true, "searchable": true },
+                        { "title": 'Title',         "data": "Title",             "width": "20%",    "name": "Title",        "visible": true, "searchable": true },
+                        { "title": 'Name' ,         "data": "Name",              "width": "20%",    "name": "Name",         "visible": true, "searchable": true},
+                        { "title": 'Description',   "data": "Description",       "width": "20%",    "name": "Description",  "visible": true, "searchable": true},
+                        { "title": 'Comment' ,      "data": "Comment",           "width": "20%",    "name": "Comment",      "visible": true, "searchable": true},
+                        { "title": 'System' ,       "data": "System",            "width": "20%",    "name": "System",       "visible": true, "searchable": true},
+                        { "title": 'Level',         "data": "Pri_level",         "width": "20%",    "name": "Pri_level",    "visible": true, "searchable": true },
                         { 
-                            "title": 'Status',      "name": "Status",           "visible": true, "searchable": true, 
+                            "title": 'Job Status',      "name": "Status",         "width": "2%",        "visible": true, "searchable": true, 
 
                             "mRender": function(data, type, full) {
                                 if(full.Status == 'Cancel'){
@@ -1068,10 +1063,10 @@
                                 }
                             }
                         },
-                        { "title": 'Personel',      "data": "Personel",         "name": "Personel",     "visible": true, "searchable": true },
-                        { "title": 'Submitted',     "data": "Submitted",        "name": "Submitted",    "visible": true, "searchable": true },
-                        { "title": 'Completed',     "data": "Completed",        "name": "Completed",    "visible": true, "searchable": true},
-                        { "title": 'created_at',    "data": "created_at",       "name": "created_at",   "visible": false, "searchable": true },
+                        { "title": 'Personel',      "data": "Personel",         "width": "2%",      "name": "Personel",     "visible": true, "searchable": true },
+                        { "title": 'Submitted',     "data": "Submitted",        "width": "2%",      "name": "Submitted",    "visible": true, "searchable": true },
+                        { "title": 'Completed',     "data": "Completed",        "width": "2%",      "name": "Completed",    "visible": true, "searchable": true},
+                        { "title": 'created_at',    "data": "created_at",       "width": "2%",      "name": "created_at",   "visible": false, "searchable": true },
                         
                     ],
 
@@ -1350,17 +1345,18 @@
 
 // cancel modal
     function showCancel(id) {
-    console.log(id);
-    const canceled = {!! json_encode($cancel) !!};
+        console.log(id);
+        const canceled = {!! json_encode($cancel) !!};
 
-    canceled.forEach((cancel) => {
+        canceled.forEach((cancel) => {
 
-        if(cancel['rep_id'] == id)
-        {
-            $("#reason").html(cancel['reason']);
-            item = '';
-        }
+            if(cancel['rep_id'] == id)
+            {
+                $("#reason").html(cancel['reason']);
+                item = '';
+            }
     });
+   
     };
 
    

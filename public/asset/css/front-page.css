@@ -123,3 +123,25 @@ form .row input::placeholder{
 form .button input:hover{
   background: #044a79;
 }
+@media screen and (max-width: 1000px) 
+{
+  .glasscontainer{
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+    max-height: 500px;
+    margin-top: 350px;
+    width:80%;
+    float: center;
+  }
+  body{
+    margin-top: -20px;
+    position:cover;
+    /* background-repeat: no-repeat; */
+    background-size: 100%;
+    height: 200%;
+ }
+}

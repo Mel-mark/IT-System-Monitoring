@@ -3,12 +3,12 @@ body{
     background: linear-gradient(90deg, rgba(2,0,36,1) 13%, rgb(27, 36, 48) 46%,rgb(27, 36, 48) 100%);
     background-repeat: no-repeat;
     background-size: cover;
+    background-size: 500%;
     min-height: 950px;
-    margin-top: 1%;
+    min-width: 100%;
+    margin-top: 3%;
 }
-.container-fluid{
-    width: 80%;
-}
+
 
 .chart{
     float:left;
@@ -74,7 +74,10 @@ td{
     font-weight: 500;
     
 }
-
+.modal-body{
+    max-width: fit-content;
+    overflow: auto;
+}
 .card-th{
     font-size: 30px;
     font-weight: 500;
@@ -218,8 +221,7 @@ td{
        margin-top: 40px;
        border-radius: 10px;
        background-color:white;
-       position: relative;
-       border-bottom: 1px dotted black;
+    
   }
   .hovertext:before {
     content: attr(data-hover);
@@ -379,3 +381,52 @@ td{
     font-size:20px;
     float:right;
  }
+ .container-fluid{
+    width: 80%;
+    
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
+}
+ /* for responsive data 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+
+@media screen and (max-width: 1020px) 
+{
+   
+    .container-fluid{
+        width: 95%;
+    }
+}
+ @media screen and (max-width: 800px) 
+{
+   
+    .container-fluid{
+        width: 90%;
+    }
+    
+   .overview-container{
+     
+        margin-left: -5%;
+        float: left;
+        width: 110%;
+        margin-top: 40px;
+        border-radius: 10px;
+        background-color:white;
+        
+   }
+    .hovertext-status , .hovertext-history{
+        margin-left: -5%;
+        float: left;
+        width: 110%;
+        margin-top: 20px;
+        border-radius: 10px;
+        background-color:white;
+    }
+
+    
+}
