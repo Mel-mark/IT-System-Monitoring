@@ -15,24 +15,10 @@ use Symfony\Component\Console\Input\Input;
 
 class reportsController extends Controller
 {
-
-    // log in in admin
-    public function index(request $request)
+    public function __construct()
     {
-        $email = $request->email;
-        $password = $request->password;
-
-        if (!empty($email) && !empty($password) && $email == 'admin' && $password == 'admin') 
-            {
-                $request->session()->put(['user' => 'admin']);
-                return redirect('admin');
-            } 
-        else
-            {
-                return back()->with('failed','Email or password not match');
-            }
+        $this->middleware('auth');
     }
-
     // log in as guest
     public function guest()
     {
@@ -83,8 +69,6 @@ class reportsController extends Controller
         // sytem array
         $system = ['Citrix','Data Center Server','eClipse','MITS Server','Subic NAS','TSM Mobile','TSM Office'];
 
-        if(Session::has('user')){
-
         // date formating for last week and last month --------------------------------------------------------------------------------------------------------------------
             $now = Carbon::now();
             
@@ -113,11 +97,7 @@ class reportsController extends Controller
     
             return view('admin/dashboard_admin',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
 
-          }else{
-
-              return view('index');
-
-          }
+         
     }
     // get history data 
     public function getHistoryDdata(request $request)
@@ -194,13 +174,7 @@ class reportsController extends Controller
         return $info;
     
     }
-    // log in as guest
-    public function logout(request $request)
-    {
-              $request->session()->forget('user');
-              $request->session()->forget('Error');
-              return view('index');
-    }
+    
 
     // add reports
     public function addReport(request $request,reports $reports)
@@ -397,7 +371,6 @@ class reportsController extends Controller
 
     public function cancel(request $request,reports $reports,canceled_reports $cancel)
     {
-        echo $request->rep_id;
         // update status or report
         $reports = reports::find($request->rep_id);
        
@@ -443,7 +416,7 @@ class reportsController extends Controller
         );
      
         $file = $request->file('file');
-        echo $_FILES['file']['name'];
+      
          // Validate whether selected file is a CSV file
         if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $fileMimes))
         {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\reportsController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('auth/login');
 });
 
 // process
-Route::post('/admin_login', [reportsController::class,'index'])->name('admin_login');
+// Route::post('/admin_login', [AuthController::class,'login'])->name('admin_login');
 Route::post('/addReport', [reportsController::class,'addReport'])->name('addReport');
 
 Route::post('/edit_report', [reportsController::class,'edit_report'])->name('edit_report');
@@ -36,6 +37,11 @@ Route::post('/filter', [reportsController::class,'filter'])->name('/filter');
 // Route::get('/history', [reportsController::class,'history'])->name('history');
 Route::get('/getHistoryDdata', [reportsController::class,'getHistoryDdata']);
 Route::get('/export/{from}/{to}/{status}/{systems}/{personel}', [reportsController::class,'export'])->name('export');
+Route::get('/home', [reportsController::class,'admin'])->name('admin');
 Route::get('/admin', [reportsController::class,'admin'])->name('admin');
 Route::get('/guest', [reportsController::class,'guest'])->name('guest');
-Route::get('/logout', [reportsController::class,'logout'])->name('logout');
+
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

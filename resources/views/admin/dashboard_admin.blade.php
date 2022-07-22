@@ -299,10 +299,21 @@
                         </span>
                     </div>
                     <div class="logout">
-                        <a  href="{{ url('/logout')}} " class="btn btn-outline-secondary ">
-                            <strong>Admin  </strong>                  
-                            <img src="{{ asset('asset/image/logout.png') }}" class="logout-logo"> 
+                               <!-- -->
+                        <a  data-toggle="modal" data-target="#addpersonel" class="status-hover"  data-hover="Add Personel" style="margin-right:5px;">
+                            <img src="{{ asset('asset/image/addpersonel.png') }}" class="logos" data-hover="Add Personel">
                         </a>
+                  
+                        <a  href="{{ route('logout') }}"class="btn btn-outline-secondary "
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ Auth::user()->name}}                
+                                        <img src="{{ asset('asset/image/logout.png') }}" class="logout-logo"> 
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                     </div>
                 </div>
             </nav>
@@ -638,7 +649,7 @@
 
                                     <!-- modal list-->    
                                         <div class="modal fade"  id="myModal2"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                            <div class="modal-dialog modal-xl" >
+                                            <div class="modal-dialog modal-lg" >
                                                 <div class="modal-content" >
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="myModal2Label">Report List</h5>
@@ -648,7 +659,6 @@
                                                     </div>
                                                 
                                                     <div class="modal-body"  id="tableData">
-                                                        
                                                         <!-- data came from js  -->
                                                     </div>
                                                     <div >
@@ -681,11 +691,12 @@
                             <td><span class="badge  bg-dark text-dark" style="font-size:5px;">0</span>  </td>
                             <td><span class="badge  bg-danger  text-danger" style="font-size:5px;">0</span> </td>
                         </tr>
+                        <tr>
                             <td></td>
                             <td></td>
                             <td><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:5px;">0</span> </td>
                             <td><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:5px;">0</span> </td>
-                        <tr>
+                        
                         </tr>
                     </table>
                 </div>
@@ -750,198 +761,30 @@
             </table>
         </div>
             <!-- modal Cancel resason-->    
-                <div class="modal fade"  id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" >
-                            <div class="modal-content" >
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Reason of Report Cancelation</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                        <textarea name="reason" id="reason" cols="100" rows="10" readonly></textarea>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                @include('modals/cancelreason');
             <!-- end of cancel-->     
                 
-            <!-- End history -------------------------------------------------------------------------------------------------------------- -->
+            <!-- Modal personel add-->
+                @include('modals/addpersonel');
+            <!-- end modal -->
+            
             <!-- modal submit Cancel resason ==========================================================================================-->    
-                <div class="modal fade"  id="myModal3"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" >
-                                    <div class="modal-content" >
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="myModal2Label">Reason of Report Cancelation</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ url('/cancel')}}" method="POST">
-                                                @csrf
-                                                <input type="text" id="rep_id" name="rep_id" hidden>
-                                                <textarea name="reason" id="reason" cols="100" rows="10" ></textarea>
-                                            
-                                        </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger">Submit</button>
-                                            </div>
-                                            </form>
-                                    </div>
-                                </div>
-                </div>
+                @include('modals/cancelreport');
             <!-- end of cancel-->     
 
             <!-- Modal add-->
-                <div class="modal fade" id="addmodal" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
-                        <div class="modal-content" style="padding:10px;">
-                            <div class="modal-header">
-                                <h3 class="modal-title" id="myModalLabel">Add Reports</h3>
-                                    <a data-toggle="modal" data-target="#filemodal"><span class="hover"><b> Upload CSV Files </b></span> <img src="{{ asset('asset/image/upload.png') }}" class="logos"> </a>
-                                    
-                            </div>
-                            <div class="modal-body" >
-                                <form  action="{{ route('addReport') }}"method="POST">
-                                    @csrf
-                                            <!-- name -->
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="title" style="width:170px;">Name</span>
-                                                </div>
-                                                <input type="text" name="name" id="name" class="form-control" required>
-                                        
-                                            </div>
-                                            <br>
-                                            <!-- title/short description -->
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="title" style="width:170px;">TItle</span>
-                                                </div>
-                                                <input type="text" name="title" id="title" class="form-control" required>
-                                        
-                                            </div>
-                                            <br>
-                                            <!-- priority level -->
-                                            <div class="input-group" >
-                                                <div class="input-group-prepend">
-                                                    <label class="input-group-text" for="inputGroupSelect01" style="width:170px;">Priority level</label>
-                                                </div>
-                                                <select class="form-control" id="inputGroupSelect01"  name="pri_level" id="pri_level">
-                                                    <option value="Outage">Outage</option>
-                                                    <option value="Major Impact">Major Impact</option>
-                                                    <option value="Minor Impact">Minor Impact</option>
-                                                    <option value="Low Impact or Request">Low Impact or Request</option>
-                                                </select>
-                                            </div>
-                                            <br>
-
-                                            <!-- System -->
-                                            <div class="input-group" >
-                                                <div class="input-group-prepend">
-                                                    <label class="input-group-text" for="inputGroupSelect01" style="width:170px;">System</label>
-                                                </div>
-                                                <select class="form-control" id="inputGroupSelect01" name="system" id="system">
-                                                    <option value="Citrix">Citrix</option>
-                                                    <option value="Data Center Server">Data Center Server</option>
-                                                    <option value="eClipse">eClipse </option>
-                                                    <option value="MITS Server">MITS Server </option>
-                                                    <option value="Subic NAS">Subic NAS </option>
-                                                    <option value="TSM Mobile">TSM Mobile </option>
-                                                    <option value="TSM Office">TSM Office</option>
-                                                </select>
-                                            </div>
-
-                                            <br>
-
-                                            <!-- Personel -->
-                                            <div class="input-group" >
-                                                <div class="input-group-prepend">
-                                                    <label class="input-group-text" for="inputGroupSelect01"style="width:170px;">Assigned Personel</label>
-                                                </div>
-                                                <select class="form-control" id="inputGroupSelect01" name="personel" id="personel">
-                                                    <option value="Chris">Chris</option>
-                                                    <option value="Jo Anne">Jo Anne</option>
-                                                    <option value="Paul">Paul</option>
-                                                    <option value="Valter">Valter</option>
-                                                </select>
-                                            </div>
-                                            <br>
-                                            
-                                            <!-- long description -->
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1"><B>Description</B></label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"   name="desc" id="desc" required></textarea>
-                                            </div>
-                                            <br>
-                                            <!-- Comment -->
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1"><B>Comment</B></label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  name="comment" id="comment"></textarea>
-                                            </div>
-                                            <br>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save Report</button>
-                                            </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                @include('modals/addreport');
             <!-- end modal -->
-             
+
+          
             
             </div>							
         </div>
 
     </div>
     <!-- file upload modal -->
-       <div class="modal fade"  id="filemodal"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" >
-                                    <div class="modal-content" >
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModal2Label">Upload CSV File</h4>
-                                                
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ url('/addCSV')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <h5>Tips: <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1. File extension should be CSV. <br><br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2. Follow the following format of CSV file: <br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;a. 1st column should be the header.<br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;b. second and below column will be the data.<br> <br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. Row data should be align as follow:<br><br>
-                                                                <img src="{{ asset('asset/image/sampleData.png') }}" style="width:100%;"> 
-                                                            <br><br>
-                                                                                             
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. once you submited the data you will not be able to delete or undo it.<br><br>
-                                                </h5>
-                                                
-                                                <div class="input-group">
-                                                    <input type="file" name="file" id="file" class="form-control" required>
-                                                </div>
-                                                <br>
-                                                <br>
-                                        </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success">Upload</button>
-                                            </form>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">Cancel</span>
-                                                </button>   
-                                            </div>
-
-                                            
-                                                <br>
-                                                <br>
-                                    </div>
-                                </div>
-                </div>
+            @include('modals/fileupload');
+                  
     <!-- end modal -->
 </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

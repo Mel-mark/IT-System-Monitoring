@@ -75,7 +75,6 @@ td{
     
 }
 .modal-body{
-    max-width: fit-content;
     overflow: auto;
 }
 .card-th{
@@ -89,7 +88,7 @@ td{
     padding:15px;
 }
 .logos{
-    margin-top: -10px;
+    margin-top: -2px;
     width: 40px;
 }
 .melmarkpogi{
