@@ -33,7 +33,7 @@
               
     <div class="glasscontainer">
            <div class="container">  
-           <center><h1>IT MONITORING SYSTEM</h1></center>
+           <center><h1>IT SYSTEM MONITORING</h1></center>
                 <div class="wrapper">
                       <div class="title"><span>Login</span>
                       </div>

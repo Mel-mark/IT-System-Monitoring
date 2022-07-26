@@ -11,7 +11,7 @@ use Session;
 use Response;
 use Illuminate\Pagination\Paginator;
 use Symfony\Component\Console\Input\Input;
-
+use Illuminate\Support\Facades\Auth;
 
 class reportsController extends Controller
 {
@@ -65,7 +65,9 @@ class reportsController extends Controller
     {
         $month = [];
         $count = [];
-
+        
+        $user = Auth::user();
+    
         // sytem array
         $system = ['Citrix','Data Center Server','eClipse','MITS Server','Subic NAS','TSM Mobile','TSM Office'];
 
@@ -94,9 +96,12 @@ class reportsController extends Controller
                     array_push($month,$result->created_at);
                     array_push($count,$result->pri_level);
             }
-    
-            return view('admin/dashboard_admin',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
-
+            if($user->isAdmin == 1){
+                return view('admin/dashboard_admin',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
+            }else{
+                return view('user/dashboard_guest',compact('data','data2','weeks','count','system','cancel','yesterday_data','today_data'));
+            }
+          
          
     }
     // get history data 
@@ -331,18 +336,15 @@ class reportsController extends Controller
   
     public function edit_report(reports $reports,request $request)
     {
-        
-        if(Session::has('user')){
-
+       
             $reports = reports::find($request->id);
        
             return view('admin/edit_report',compact('reports'));
 
-        }else{
+       
 
             return view('index');
 
-        }
      
     }
 

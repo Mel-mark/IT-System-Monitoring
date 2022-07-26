@@ -1,5 +1,3 @@
-
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 <!-- php and laravel condition -->
            <!-- COUNT  -->
            <!-- store highest level priority-->
@@ -267,15 +265,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT System Monitoring</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    
+    <title> IT System Monitoring</title>
+    <link rel="icon" href="{!! asset('asset/image/logod.png') !!}"/>
+
     <!-- bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- font awesome cdn link  -->
-   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -301,10 +299,19 @@
                         </span>
                     </div>
                     <div class="logout">
-                        <a  href="{{ url('/logout')}} " class="btn btn-outline-secondary ">
-                            <strong>Guest  </strong>                  
-                            <img src="{{ asset('asset/image/logout.png') }}" class="logout-logo"> 
-                        </a>
+                               <!-- -->
+                      
+                  
+                        <a  href="{{ route('logout') }}"class="btn btn-outline-secondary "
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ Auth::user()->name}}                
+                                        <img src="{{ asset('asset/image/logout.png') }}" class="logout-logo"> 
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                     </div>
                 </div>
             </nav>
@@ -319,44 +326,41 @@
                     <div  class="overview-container">
                         <div class="card"> 
                     
-                        <div class="card-header"> 
-                            <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
-                        </div>
+                            <div class="card-header"> 
+                                <h1 class="hovertext" data-hover="The is the Overview of status,charts sorted by month and button text is sorted by weeks">Tickets Overview</h1>
+                            </div>
 
-                            <div> 
-                            
-                                    </div>
-                                        <div class="chart">
-                                            <canvas id="myChart"></canvas>
-                                        </div> 
-                                    <div >
-                                 <!-- chart -->
-            
-                                              
-                            
-                                        <ul>
-                                            <table>
-                                                <tbody > 
-                                                    <strong>
-                                                        <tr >
-                                                            <td><h4> Citrix </h4> Last 7 Days<span class="i">({{$k1}})</span></td> 
-                                                            <td><h4> eClipse </h4> Last 7 Days<span class="i">({{$k3}})</span></td>
-                                                            <td> <h4>TSM Mobile </h4> Last 7 Days <span class="i"> ({{$k6}}) </span></td>
-                                                        </tr>
-                                                        
-                                                        <tr>
-                                                            <td><h4> Subic NAS </h4> Last 7 Days<span class="i">({{$k5}})</span></td>
-                                                            <td> <h4>TSM Office  </h4> Last 7 Days<span class="i"> ({{$k7}}) </span></td>
-                                                        </tr>
-                                                        
-                                                        <tr>  
-                                                            <td> <h4>Data Center Server </h4> Last 7 Days<span class="i"> ({{$k2}}) </span></td>
-                                                            <td><h4> MITS Serve  </h4> Last 7 Days <span class="i">({{$k4}}) </span></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </strong>
-                                            </table>
-                                        </ul> 
+                                        <div> 
+                                        
+                                                </div>
+                                                    <div class="chart">
+                                                        <canvas id="myChart"></canvas>
+                                                    </div> 
+                                                <div >
+                                            <!-- chart -->
+                                                    <ul>
+                                                        <table>
+                                                            <tbody > 
+                                                                <strong>
+                                                                    <tr >
+                                                                        <td><h4> Citrix </h4> Last 7 Days<span class="i">({{$k1}})</span></td> 
+                                                                        <td><h4> eClipse </h4> Last 7 Days<span class="i">({{$k3}})</span></td>
+                                                                        <td> <h4>TSM Mobile </h4> Last 7 Days <span class="i"> ({{$k6}}) </span></td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td><h4> Subic NAS </h4> Last 7 Days<span class="i">({{$k5}})</span></td>
+                                                                        <td> <h4>TSM Office  </h4> Last 7 Days<span class="i"> ({{$k7}}) </span></td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>  
+                                                                        <td> <h4>Data Center Server </h4> Last 7 Days<span class="i"> ({{$k2}}) </span></td>
+                                                                        <td><h4> MITS Serve  </h4> Last 7 Days <span class="i">({{$k4}}) </span></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </strong>
+                                                        </table>
+                                                    </ul> 
 
 
                                     </div>
@@ -368,7 +372,11 @@
                     <div class="card">
                         <div class="card-header"> 
                             <h1 class="myh1hover" data-hover="The is the Status Card where all system is listed and being sorted, it indicates the highest priority level of the system, here you can add and see the reports/ticked of employee.">Status</h1>
-                            
+                            <div class="add">
+                                <span class="hover">
+                                      
+                                </span>
+                            </div>
                         </div>
                         <br>
                         <div >
@@ -416,11 +424,11 @@
                                                                                     </a>
                                                                             </h4>
                                                                         @elseif($pri1 == 'Low Impact or Request')
-                                                                             <h4  class="status-hover"  data-hover=" A general request">
-                                                                                <a href="#" class="Low" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                    </span class=""  data-hover="dddddddddddd">{{$pri1 ;}} ({{$i1}})
-                                                                                </a>
-                                                                            </h4>
+                                                                        <h4  class="status-hover"  data-hover=" A general request">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                        </span>{{$pri1 ;}} ({{$i1}})
+                                                                                    </a>
+                                                                             </h4>
                                                                         @else
                                                                             </span>{{$pri1 ;}} ({{$i1}})
                                                                         @endif
@@ -636,8 +644,8 @@
                                             @endforeach
 
                                     <!-- modal list-->    
-                                        <div class="modal fade"  id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                            <div class="modal-dialog modal-xl" >
+                                        <div class="modal fade"  id="myModal2"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" >
                                                 <div class="modal-content" >
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="myModal2Label">Report List</h5>
@@ -647,8 +655,7 @@
                                                     </div>
                                                 
                                                     <div class="modal-body"  id="tableData">
-                                                        
-                                                        <!-- data came from js at the button -->
+                                                        <!-- data came from js  -->
                                                     </div>
                                                     <div >
                                                         <div id="hidebutton">
@@ -680,11 +687,12 @@
                             <td><span class="badge  bg-dark text-dark" style="font-size:5px;">0</span>  </td>
                             <td><span class="badge  bg-danger  text-danger" style="font-size:5px;">0</span> </td>
                         </tr>
+                        <tr>
                             <td></td>
                             <td></td>
                             <td><span class="badge" style="background-color:rgb(255, 159, 41) ;color:rgb(255, 159, 41);font-size:5px;">0</span> </td>
                             <td><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:5px;">0</span> </td>
-                        <tr>
+                        
                         </tr>
                     </table>
                 </div>
@@ -695,7 +703,7 @@
                     <h1 class="history-card" data-hover="History of closed tickets">
                         History 
                     </h1>
-                        
+                     
                     
                      <br>
                      <div class="filtration">
@@ -737,7 +745,7 @@
                     <br>
                     <br>
                     <hr >
-                <table class="table" id="datatable">
+                <table class="table" id="datatable" >
              
                     <tbody id="history-body">
                        
@@ -746,27 +754,20 @@
             </table>
         </div>
             <!-- modal Cancel resason-->    
-                <div class="modal fade"  id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" >
-                            <div class="modal-content" >
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Reason of Report Cancelation</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                        <textarea name="reason" id="reason" cols="100" rows="10" readonly></textarea>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                @include('modals/cancelreason');
             <!-- end of cancel-->     
                 
-            <!-- End history -------------------------------------------------------------------------------------------------------------- -->
-          
+            <!-- Modal personel add-->
+                @include('modals/addpersonel');
+            <!-- end modal -->
+            
+            <!-- modal submit Cancel resason ==========================================================================================-->    
+                @include('modals/cancelreport');
+            <!-- end of cancel-->     
+
+            <!-- Modal add-->
+                @include('modals/addreport');
+            <!-- end modal -->
 
           
             
@@ -775,47 +776,8 @@
 
     </div>
     <!-- file upload modal -->
-       <div class="modal fade"  id="filemodal"  tabindex="-1" role="dialog" aria-labelledby="myModal2Label" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" >
-                                    <div class="modal-content" >
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModal2Label">Upload CSV File</h4>
-                                                
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ url('/addCSV')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <h5>Tips: <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1. File extension should be CSV. <br><br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2. Follow the following format of CSV file: <br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;a. 1st column should be the header.<br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;b. second and below column will be the data.<br> <br>
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. Row data should be align as follow:<br><br>
-                                                                <img src="{{ asset('asset/image/sampleData.png') }}" style="width:100%;"> 
-                                                            <br><br>
-                                                                                             
-                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3. once you submited the data you will not be able to delete or undo it.<br><br>
-                                                </h5>
-                                                
-                                                <div class="input-group">
-                                                    <input type="file" name="file" id="file" class="form-control" required>
-                                                </div>
-                                                <br>
-                                                <br>
-                                        </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success">Upload</button>
-                                            </form>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">Cancel</span>
-                                                </button>   
-                                            </div>
-
-                                            
-                                                <br>
-                                                <br>
-                                    </div>
-                                </div>
-                </div>
+            @include('modals/fileupload');
+                  
     <!-- end modal -->
 </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -851,7 +813,7 @@
     var close_option =   ' </tr>' ;
     var table_foot = ' </tbody>' +
                             '</table>';
-    var table_th = '<table  class="table">'+
+    var table_th = '<table style="overflow-x: scroll;max-width:20px;">'+
                             '<thead > '+
                                ' <tr>'+
                                    ' <th style="padding:5px;border:1px solid black;">Name</th>'+
@@ -863,7 +825,6 @@
                                     '<th style="padding:5px;border:1px solid black;">Comment</th>'+
                                     '<th style="padding:5px;border:1px solid black;">Date</th>'+
                                     '<th style="padding:5px;border:1px solid black;">Time(AU)</th>'+
-                                    
                                 '</tr>'+
                              '</thead>' +
                             '<tbody>' ; 
@@ -872,10 +833,12 @@
 // history filtration and modal ===============================================000000000000000000000000000000000000000000000000===================================
 // data table
     $(function() {
+             var width = $(window).width();
             var drawer_count = 1;
             var data = [];
-            $('#datatable').DataTable({
+           
 
+            $('#datatable').DataTable({
                  
 
                 "oLanguage": {
@@ -891,45 +854,42 @@
                 "serverSide": true,
                 "ordering": false,
                 "ajax": {
-                    "type": "GET",
-                    "url": "{{ url('getHistoryDdata') }}",
-                    "data": function(result) {
-                        result.from_date = document.getElementById('from_date').value;
-                        result.to_date = document.getElementById('to_date').value;
-                        result.Personel = document.getElementById('pe').value;
-                        result.System  = document.getElementById('sy').value;
-                        result.Status = document.getElementById('st').value;
-                      
+                        "type": "GET",
+                        "url": "{{ url('getHistoryDdata') }}",
+                        "data": function(result) {
+                            result.from_date = document.getElementById('from_date').value;
+                            result.to_date = document.getElementById('to_date').value;
+                            result.Personel = document.getElementById('pe').value;
+                            result.System  = document.getElementById('sy').value;
+                            result.Status = document.getElementById('st').value;
+                            
 
-                    },
-                    "dataFilter": function(data) {
-                        drawer_count++;
-                        var json = jQuery.parseJSON(data);
-                        json.draw = json.draw;
-                        json.recordsTotal = json.total;
-                        json.recordsFiltered = json.total;
-                        json.data = json.data;
+                        },
+                        "dataFilter": function(data) {
+                            drawer_count++;
+                            var json = jQuery.parseJSON(data);
+                            json.draw = json.draw;
+                            json.recordsTotal = json.total;
+                            json.recordsFiltered = json.total;
+                            json.data = json.data;
 
 
-                        $('#list_table_processing').css('display', 'none');
-                        return JSON.stringify(json); // return JSON string
-                    }
+                            $('#list_table_processing').css('display', 'none');
+                            return JSON.stringify(json); // return JSON string
+                        }
                     },
                     scrollX: true,
                     "columns": [
-                      
-                        { "title": '#',             "data": "#",                "name": "#",            "visible": true, "searchable": true },
-                        { "title": 'Title',         "data": "Title",            "name": "Title",        "visible": true, "searchable": true },
-                        { "title": 'Description',   "data": "Description",      "name": "Description",  "visible": true, "searchable": true},
-                        { "title": 'Name' ,         "data": "Name",             "name": "Name",         "visible": true, "searchable": true},
-                        { "title": 'Comment' ,      "data": "Comment",          "name": "Comment",      "visible": true, "searchable": true},
-                        { "title": 'System' ,       "data": "System",           "name": "System",       "visible": true, "searchable": true},
-                        { "title": 'Level',         "data": "Pri_level",        "name": "Pri_level",    "visible": true, "searchable": true },
+                        { "title": '#',             "data": "#",                 "width": "2%",     "name": "#",            "visible": true, "searchable": true },
+                        { "title": 'Title',         "data": "Title",             "width": "20%",    "name": "Title",        "visible": true, "searchable": true },
+                        { "title": 'Name' ,         "data": "Name",              "width": "20%",    "name": "Name",         "visible": true, "searchable": true},
+                        { "title": 'Description',   "data": "Description",       "width": "20%",    "name": "Description",  "visible": true, "searchable": true},
+                        { "title": 'Comment' ,      "data": "Comment",           "width": "20%",    "name": "Comment",      "visible": true, "searchable": true},
+                        { "title": 'System' ,       "data": "System",            "width": "20%",    "name": "System",       "visible": true, "searchable": true},
+                        { "title": 'Level',         "data": "Pri_level",         "width": "20%",    "name": "Pri_level",    "visible": true, "searchable": true },
                         { 
-                            "title": 'Job Status',      
-                            "name": "Status",           
-                            "visible": true, 
-                            "searchable": true, 
+                            "title": 'Job Status',      "name": "Status",         "width": "2%",        "visible": true, "searchable": true, 
+
                             "mRender": function(data, type, full) {
                                 if(full.Status == 'Cancel'){
                                     return  '<a href="#"  id="modal1" onclick="showCancel(' + full.id + ')" data-toggle="modal" data-target="#myModal"> <p style="color:red;">Canceled</p> </a>';
@@ -938,10 +898,10 @@
                                 }
                             }
                         },
-                        { "title": 'Personel',      "data": "Personel",         "name": "Personel",     "visible": true, "searchable": true },
-                        { "title": 'Submitted',     "data": "Submitted",        "name": "Submitted",    "visible": true, "searchable": true },
-                        { "title": 'Completed',     "data": "Completed",        "name": "Completed",    "visible": true, "searchable": true},
-                        { "title": 'created_at',    "data": "created_at",       "name": "created_at",   "visible": false, "searchable": true },
+                        { "title": 'Personel',      "data": "Personel",         "width": "2%",      "name": "Personel",     "visible": true, "searchable": true },
+                        { "title": 'Submitted',     "data": "Submitted",        "width": "2%",      "name": "Submitted",    "visible": true, "searchable": true },
+                        { "title": 'Completed',     "data": "Completed",        "width": "2%",      "name": "Completed",    "visible": true, "searchable": true},
+                        { "title": 'created_at',    "data": "created_at",       "width": "2%",      "name": "created_at",   "visible": false, "searchable": true },
                         
                     ],
 
@@ -953,6 +913,30 @@
             // $('#history-body').html()
         });
 
+        function reload_table() {
+            //  download filtered data
+                        from = $('.from').val();
+                        to = $('.to').val();
+                        status = $('.status').val();
+                        systems = $('.systems').val();
+                        personel =  $(".personel").val();
+                        var href = '';
+                        console.log(from,to,status,systems,personel);
+
+                        if(status == 'All'||  systems == 'All'||  personel == 'All' || from == '' && to == ''){
+                                href = '<a href="{{url("export")}}/' + null + '/' + null +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                                        '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                                                    '</a>';
+                        }else{
+                            href = '<a href="{{url("export")}}/' + from + '/' + to +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                                        '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                                                    '</a>';
+                        }
+                    
+                        $('.download').html(href);
+                // end of download
+            $('#datatable').DataTable().ajax.reload();
+        }
   
 // get data from eloquent
  const _reports = {!! json_encode($data) !!};
@@ -1014,8 +998,7 @@
                                                                 '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].comment + '</td>' +                
                                                                 '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].created_at.slice(0,10) + '</td>' +  
                                                                 '<td style="padding:5px;border:1px solid black;">' + yesterday_data[i].created_at.slice(11,19) + '</td>' +
-                                                               
-
+                                                                
                                                             '</tr>';         
                                                 }else{
                                                     
@@ -1031,7 +1014,7 @@
                                                                     '<td style="border:1px solid black;">' + yesterday_data[i].comment + '</td>' +                
                                                                     '<td style="border:1px solid black;">' + yesterday_data[i].created_at.slice(0,10) + '</td>' +                
                                                                     '<td style="border:1px solid black;">' + yesterday_data[i].created_at.slice(11,10) + '</td>' +
-                                                                    
+                                                                   
                                                                 '</tr>';         
                                                         
 
@@ -1120,7 +1103,7 @@
                                                 '<td style="border:1px solid black;">' + today_data[i].comment + '</td>' +                
                                                 '<td style="border:1px solid black;">' + today_data[i].created_at.slice(0,10) + '</td>' +                
                                                 '<td style="border:1px solid black;">' + today_data[i].created_at.slice(11,10) + '</td>' +
-                                               
+                                              
                                             '</tr>';         
                                         
 
@@ -1166,17 +1149,18 @@
 
 // cancel modal
     function showCancel(id) {
-    console.log(id);
-    const canceled = {!! json_encode($cancel) !!};
+        console.log(id);
+        const canceled = {!! json_encode($cancel) !!};
 
-    canceled.forEach((cancel) => {
+        canceled.forEach((cancel) => {
 
-        if(cancel['rep_id'] == id)
-        {
-            $("#reason").html(cancel['reason']);
-            item = '';
-        }
+            if(cancel['rep_id'] == id)
+            {
+                $("#reason").html(cancel['reason']);
+                item = '';
+            }
     });
+   
     };
 
    
@@ -1355,7 +1339,16 @@
             config
         );
 
+// download unfiltered data
+
+    if( status == 'All'||  systems == 'All'||  personel == 'All' || from == '' && to == ''){
+        var href = '<a href="{{url("export")}}/' + null + '/' + null +  '/' + status +  '/' + systems + '/' + personel+ '">' +
+                                '<img src="asset/image/download.png") class= "download" data-hover="Download Filtered Data"> '+
+                        '</a>';
+                    
+            $('.download').html(href);
+                
+    }          
 
 </script>
 </html>
-                    

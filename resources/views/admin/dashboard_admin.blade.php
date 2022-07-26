@@ -428,11 +428,11 @@
                                                                                     </a>
                                                                             </h4>
                                                                         @elseif($pri1 == 'Low Impact or Request')
-                                                                             <h4  class="status-hover"  data-hover=" A general request">
-                                                                                <a href="#" class="Low" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
-                                                                                    </span class=""  data-hover="dddddddddddd">{{$pri1 ;}} ({{$i1}})
-                                                                                </a>
-                                                                            </h4>
+                                                                                <h4  class="status-hover"  data-hover=" A general request">
+                                                                                    <a href="#" class="modala" data-item="{{$sys}}" data-toggle="modal" data-target="#myModal2"><span class="badge" style="background-color:rgb(247, 236, 9) ;color:rgb(247, 236, 9);font-size:15px;">0
+                                                                                        </span>{{$pri1 ;}} ({{$i1}})
+                                                                                    </a>
+                                                                             </h4>
                                                                         @else
                                                                             </span>{{$pri1 ;}} ({{$i1}})
                                                                         @endif
